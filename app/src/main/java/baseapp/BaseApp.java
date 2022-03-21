@@ -8,6 +8,10 @@ import database.repository.TaskRepository;
 
 public class BaseApp extends Application {
 
+    BaseApp()
+    {
+        super();
+    }
     @Override
     public void onCreate(){
         super.onCreate();
