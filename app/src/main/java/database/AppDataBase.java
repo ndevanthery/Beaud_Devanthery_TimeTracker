@@ -56,7 +56,7 @@ public abstract class AppDataBase extends RoomDatabase {
                         super.onCreate(db);
                         Executors.newSingleThreadExecutor().execute(() -> {
                             AppDataBase database = AppDataBase.getInstance(appContext);
-                            initializeDemoData(database);
+                            database.initializeDemoData(database);
 
                             database.setDatabaseCreated();
                         });
@@ -64,7 +64,8 @@ public abstract class AppDataBase extends RoomDatabase {
                 }).build();
     }
 
-    public static void initializeDemoData(final AppDataBase database) {
+    public void initializeDemoData(final AppDataBase database) {
+        System.out.println("INITIALIZING DATA");
         Executors.newSingleThreadExecutor().execute(() -> {
             database.runInTransaction(() -> {
                 Log.i(TAG, "Wipe database.");

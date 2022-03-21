@@ -16,6 +16,7 @@ public class DatabaseInitializer {
 
     public static void populateDatabase(final AppDataBase db){
         Log.i(TAG, "inserting demo data.");
+        System.out.println("inserting data");
         PopulateDbAsync task = new PopulateDbAsync(db);
         task.execute();
     }
@@ -82,7 +83,7 @@ public class DatabaseInitializer {
                 "BeaudS",
                 "1234",
                 false);
-        System.out.println("USER TEST AJOUTE");
+        System.out.println("USER TEST SIMON");
 
         try {
             Thread.sleep(1000);

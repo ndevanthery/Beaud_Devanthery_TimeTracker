@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.beaud_devanthery_timetracker.R;
 
@@ -29,8 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
     private EditText Username, Password;
     private ProgressBar progressBar;
-
-    //private EmployeeEntity employeeEntity;
+    private AppDataBase database;
 
     private EmployeeRepository repository;
 
@@ -40,7 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        database = AppDataBase.getInstance(this.getBaseContext());
+
+
+
         repository = ((BaseApp)getApplication()).getEmployeeRepository();
+
+        Username =  findViewById(R.id.editTextTextEmailAddress);
+        Password = findViewById(R.id.editTextTextPassword);
+
 
     }
 
@@ -52,12 +60,11 @@ public class LoginActivity extends AppCompatActivity {
     public void Login(View view) {
 
 
-        usernameView.setError(null);
-        passwordView.setError(null);
+        Username.setError(null);
+        Password.setError(null);
 
 
-        Username =  findViewById(R.id.editTextTextEmailAddress);
-        Password = findViewById(R.id.editTextTextPassword);
+
         buttonLogin= findViewById(R.id.btnLogin);
 
         String stUsername = Username.getText().toString();
@@ -69,20 +76,20 @@ public class LoginActivity extends AppCompatActivity {
 
         //Check if the password is valid
         if(!TextUtils.isEmpty(stPassword) && !isPasswordValid(stPassword)){
-            passwordView.setError(getString(R.string.error_invalid_password));
-            passwordView.setText("");
-            focusView = passwordView;
+            Password.setError(getString(R.string.error_invalid_password));
+            Password.setText("");
+            focusView = Password;
             cancel=true;
         }
 
         //Check if the username is valid
         if(TextUtils.isEmpty(stUsername)){
-            usernameView.setError(getString(R.string.error_username_required));
-            focusView = usernameView;
+            Username.setError(getString(R.string.error_username_required));
+            focusView = Username;
             cancel=true;
         }else if(!isUsernameValid(stUsername)){
-            usernameView.setError(getString(R.string.error_invalid_username));
-            focusView = usernameView;
+            Username.setError(getString(R.string.error_invalid_username));
+            focusView = Username;
             cancel=true;
         }
 
@@ -90,7 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         if(cancel){
             focusView.requestFocus();
         }else{
-            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
+            LiveData<EmployeeEntity> myData = repository.getEmployee(stUsername,getApplication());
             repository.getEmployee(stUsername, getApplication()).observe(LoginActivity.this, employeeEntity -> {
                 if (employeeEntity != null) {
                     if (employeeEntity.equals(stPassword)) {
@@ -100,19 +108,18 @@ public class LoginActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                        usernameView.setText("");
-                        passwordView.setText("");
+                        Username.setText("");
                     } else {
-                        passwordView.setError(getString(R.string.error_incorrect_password));
-                        passwordView.requestFocus();
-                        passwordView.setText("");
+                        Password.setError(getString(R.string.error_incorrect_password));
+                        Password.requestFocus();
+                        Password.setText("");
                     }
-                    progressBar.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
                 } else {
-                    usernameView.setError(getString(R.string.error_invalid_username));
-                    usernameView.requestFocus();
-                    passwordView.setText("");
-                    progressBar.setVisibility(View.GONE);
+                    Username.setError(getString(R.string.error_invalid_username));
+                    Username.requestFocus();
+                    Username.setText("");
+//                    progressBar.setVisibility(View.GONE);
                 }
             });
         }
@@ -123,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password){
-        return password.length()>4;
+        return password.length()>=4;
     }
 
     private void showError(EditText input, String s){
