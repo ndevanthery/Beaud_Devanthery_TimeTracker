@@ -33,7 +33,7 @@ public abstract class EmployeeDao {
 
     //Select sur un employée
     @Query("SELECT * FROM employee WHERE id = :id")
-    public abstract LiveData<EmployeeEntity> getById(Long id);
+    public abstract LiveData<EmployeeEntity> getById(String id);
 
     @Query("SELECT * FROM employee")
     public abstract LiveData<List<EmployeeEntity>> getAll();

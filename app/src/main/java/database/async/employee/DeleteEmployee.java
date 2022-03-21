@@ -18,7 +18,6 @@ public class DeleteEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
         this.callback = callback;
     }
 
-
     @Override
     protected Void doInBackground(EmployeeEntity... employeeEntities) {
         try{

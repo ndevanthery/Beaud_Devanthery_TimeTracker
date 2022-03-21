@@ -3,4 +3,39 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!-- Strings related to login -->
+    <string name="error_invalid_password">Password invalid</string>
+    <string name="error_incorrect_password">Password incrorrect</string>
+    <string name="error_invalid_username">Username invalid</string>
+    <string name="error_username_required">Username Required</string>
+    <string name="employee_created">An employee was created</string>
+
+    <!-- CREATE TASK fragment  -->
+    <!-- labels-->
+    <string name="CreateTask_lbl">Create a new task</string>
+    <string name="CreateTask_TaskName_lbl">Task name</string>
+    <string name="CreateTask_Description_lbl">Description</string>
+    <string name="CreateTask_StartTime_lbl">Start Time:</string>
+    <string name="CreateTask_endTime_lbl">end Time:</string>
+
+
+    <!--textbox Hints-->
+    <string name="CreateTask_title_txt">Title</string>
+    <string name="CreateTask_description_txt">small description</string>
+    <string name="CreateTask_starttime_txt">00:00</string>
+    <string name="CreateTask_endtime_txt">00:00</string>
+
+    <!-- buttons text   -->
+
+    <string name="createTask_create_btn">create</string>
+
+
+    <!-- HISTORY FRAGMENT-->
+    <!--  labels  -->
+    <string name="History_allTasks_lbl">All tasks</string>
+
+
+
+
 </resources>

@@ -34,7 +34,7 @@ public class EmployeeRepository {
 
 
     //Get des employées
-    public LiveData<EmployeeEntity> getEmployee(final Long employeeId, Application application){
+    public LiveData<EmployeeEntity> getEmployee(final String employeeId, Application application){
         return ((BaseApp) application).getDatabase().employeeDao().getById(employeeId);
     }
 

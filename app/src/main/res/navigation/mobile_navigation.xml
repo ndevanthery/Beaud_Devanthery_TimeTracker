@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_history">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.beaud_devanthery_timetracker.ui.home.HomeFragment"
+        android:id="@+id/navigation_history"
+        android:name="com.example.timetracker.ui.history.HistoryFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.beaud_devanthery_timetracker.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_Add"
+        android:name="com.example.timetracker.ui.createtask.CreateTaskFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_createtask" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.beaud_devanthery_timetracker.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_Profile"
+        android:name="com.example.timetracker.ui.profile.ProfileFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>
