@@ -9,20 +9,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "employee",
-        foreignKeys =
-        @ForeignKey(
-                entity = EmployeeEntity.class,
-                parentColumns = "id",
-                childColumns = "id",
-                onDelete = ForeignKey.CASCADE
-        ),
-        indices = {
-                @Index(
-                        value = {"owner"}
-                )}
-)
 
+
+@Entity(tableName = "employee")
 public class EmployeeEntity{
     @PrimaryKey(autoGenerate = true)
     private Long id;
@@ -41,19 +30,8 @@ public class EmployeeEntity{
     public EmployeeEntity(){
 
     }
-    public EmployeeEntity(
-            String Name,
-            String FirstName,
-            String Function,
-            String Telnumber,
-            String Email,
-            String Address,
-            String NPA,
-            String Image_Url,
-            String Username,
-            String Password,
-            Boolean isAdmin
-    ){
+
+    public EmployeeEntity(String Name, String FirstName, String Function, String Telnumber, String Email, String Address, String NPA, String Image_Url, String Username, String Password, Boolean isAdmin){
         this.Name=Name;
         this.FirstName=FirstName;
         this.Function=Function;

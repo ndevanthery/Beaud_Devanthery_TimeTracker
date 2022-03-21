@@ -38,4 +38,8 @@ public abstract class TaskDao {
 
     @Query("SELECT * FROM task")
     public abstract LiveData<List<TaskEntity>> getAll();
+
+    //delete all
+    @Query("DELETE FROM task")
+    public abstract void deleteAll();
 }

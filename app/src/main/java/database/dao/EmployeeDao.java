@@ -17,7 +17,7 @@ public abstract class EmployeeDao {
 
     //Insertion d'un employée
     @Insert
-    public abstract long insert (EmployeeEntity emploee);
+    public abstract long insert (EmployeeEntity employee);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertAll(List<EmployeeEntity> employees);
@@ -38,5 +38,8 @@ public abstract class EmployeeDao {
     @Query("SELECT * FROM employee")
     public abstract LiveData<List<EmployeeEntity>> getAll();
 
+    //Delete All
+    @Query("DELETE FROM employee")
+    public abstract void deleteAll();
 
 }

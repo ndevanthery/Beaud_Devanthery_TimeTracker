@@ -8,10 +8,6 @@ import database.repository.TaskRepository;
 
 public class BaseApp extends Application {
 
-    BaseApp()
-    {
-        super();
-    }
     @Override
     public void onCreate(){
         super.onCreate();
@@ -19,7 +15,6 @@ public class BaseApp extends Application {
 
     public AppDataBase getDatabase(){
         return AppDataBase.getInstance(this);
-
     }
 
     public EmployeeRepository getEmployeeRepository(){
@@ -29,5 +24,4 @@ public class BaseApp extends Application {
     public TaskRepository getTaskRepository(){
         return TaskRepository.getInstance();
     }
-
 }

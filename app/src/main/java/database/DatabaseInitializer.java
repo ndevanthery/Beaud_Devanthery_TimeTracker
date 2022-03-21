@@ -6,6 +6,9 @@ import android.util.Log;
 import database.entity.EmployeeEntity;
 import database.entity.TaskEntity;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class DatabaseInitializer {
 
@@ -46,6 +49,7 @@ public class DatabaseInitializer {
 
         db.employeeDao().insert(employee);
 
+
     }
 
 
@@ -78,6 +82,7 @@ public class DatabaseInitializer {
                 "BeaudS",
                 "1234",
                 false);
+        System.out.println("USER TEST AJOUTE");
 
         try {
             Thread.sleep(1000);

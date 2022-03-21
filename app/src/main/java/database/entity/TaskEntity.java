@@ -7,20 +7,8 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "task",
-        foreignKeys =
-        @ForeignKey(
-                entity = EmployeeEntity.class,
-                parentColumns = "id",
-                childColumns = "id",
-                onDelete = ForeignKey.CASCADE
-        ),
-        indices = {
-                @Index(
-                        value = {"owner"}
-                )}
-)
 
+@Entity(tableName = "task")
 public class TaskEntity {
     @PrimaryKey(autoGenerate = true)
     private Long id;

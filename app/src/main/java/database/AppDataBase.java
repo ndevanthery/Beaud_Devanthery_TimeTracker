@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
@@ -15,9 +16,11 @@ import java.util.concurrent.Executors;
 
 import database.dao.EmployeeDao;
 import database.dao.TaskDao;
+import database.entity.EmployeeEntity;
+import database.entity.TaskEntity;
 
 
-
+@Database(entities = {EmployeeEntity.class, TaskEntity.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static final String TAG ="AppDatabase";
@@ -32,11 +35,11 @@ public abstract class AppDataBase extends RoomDatabase {
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated= new MutableLiveData<>();
 
-    public static  AppDataBase getInstance(final Context context){
-        if(instance == null){
-            synchronized (AppDataBase.class){
-                if(instance==null){
-                    instance= buildDatabase(context.getApplicationContext());
+    public static AppDataBase getInstance(final Context context) {
+        if (instance == null) {
+            synchronized (AppDataBase.class) {
+                if (instance == null) {
+                    instance = buildDatabase(context.getApplicationContext());
                     instance.updateDatabaseCreated(context.getApplicationContext());
                 }
             }
@@ -44,36 +47,34 @@ public abstract class AppDataBase extends RoomDatabase {
         return instance;
     }
 
-    private static AppDataBase buildDatabase(final Context appContext){
-        Log.i(TAG, "Database will be initilized on the mobile");
-        return Room.databaseBuilder(appContext, AppDataBase.class, DATABASE_NAME).addCallback(new Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-                Executors.newSingleThreadExecutor().execute(()-> {
-                    AppDataBase dataBase = AppDataBase.getInstance(appContext);
-                    initializeDemoData(dataBase);
-                    dataBase.setDatabaseCreated();
+    private static AppDataBase buildDatabase(final Context appContext) {
+        Log.i(TAG, "Database will be initialized.");
+        return Room.databaseBuilder(appContext, AppDataBase.class, DATABASE_NAME)
+                .addCallback(new Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+                        Executors.newSingleThreadExecutor().execute(() -> {
+                            AppDataBase database = AppDataBase.getInstance(appContext);
+                            initializeDemoData(database);
 
-                });
-            }
-        }).build();
+                            database.setDatabaseCreated();
+                        });
+                    }
+                }).build();
     }
 
-
-    public static void initializeDemoData(final AppDataBase dataBase){
+    public static void initializeDemoData(final AppDataBase database) {
         Executors.newSingleThreadExecutor().execute(() -> {
-            dataBase.runInTransaction(()-> {
+            database.runInTransaction(() -> {
                 Log.i(TAG, "Wipe database.");
-                /*
-                dataBase.employeeDao().deleteAll();
-                dataBase.taskDao().deleteAll();
-                */
-                DatabaseInitializer.populateDatabase(dataBase);
+                database.employeeDao().deleteAll();
+                database.taskDao().deleteAll();
+
+                DatabaseInitializer.populateDatabase(database);
             });
         });
     }
-
 
     private void updateDatabaseCreated(final Context context){
         if(context.getDatabasePath(DATABASE_NAME).exists()){
@@ -84,6 +85,7 @@ public abstract class AppDataBase extends RoomDatabase {
 
     private void setDatabaseCreated(){
         mIsDatabaseCreated.postValue(true);
+        System.out.println("LA BASE DE DONNEE A BIEN ETE CREE !!!!!!!!!!");
     }
 
 

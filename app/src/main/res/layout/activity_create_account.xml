@@ -179,9 +179,7 @@
                     android:onClick="backLogin"
                     android:text="Back" />
 
-
             </LinearLayout>
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

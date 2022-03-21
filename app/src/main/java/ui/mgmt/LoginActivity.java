@@ -13,11 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 
 import com.example.beaud_devanthery_timetracker.R;
-
-import java.util.List;
 
 import baseapp.BaseApp;
 import database.AppDataBase;
@@ -27,10 +24,11 @@ import database.repository.EmployeeRepository;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameView;
-    private EditText passwordView;
+    private AutoCompleteTextView usernameView;
+    private AutoCompleteTextView passwordView;
     private Button buttonLogin;
-    //private EditText Username, Password;
+    private EditText Username, Password;
+    private ProgressBar progressBar;
 
     //private EmployeeEntity employeeEntity;
 
@@ -42,12 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        repository = ((BaseApp)getApplication()).getEmployeeRepository();
 
-        //repository = ((BaseApp)(this.getApplication())).getEmployeeRepository();
-        BaseApp app = ((BaseApp)(this.getApplication()));
-
-        usernameView = findViewById(R.id.editTextTextEmailAddress);
-        passwordView = findViewById(R.id.editTextTextPassword);
     }
 
     public void GoToRegister(View view){
@@ -62,10 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         passwordView.setError(null);
 
 
+        Username =  findViewById(R.id.editTextTextEmailAddress);
+        Password = findViewById(R.id.editTextTextPassword);
         buttonLogin= findViewById(R.id.btnLogin);
 
-        String stUsername = usernameView.getText().toString();
-        String stPassword = passwordView.getText().toString();
+        String stUsername = Username.getText().toString();
+        String stPassword = Password.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -94,9 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         if(cancel){
             focusView.requestFocus();
         }else{
+            progressBar.setVisibility(View.VISIBLE);
             repository.getEmployee(stUsername, getApplication()).observe(LoginActivity.this, employeeEntity -> {
                 if (employeeEntity != null) {
-                    if (employeeEntity.getPassword().equals(stPassword)) {
+                    if (employeeEntity.equals(stPassword)) {
                         SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
                         editor.putString(MainActivity.PREFS_USER, employeeEntity.getUsername());
                         editor.apply();
@@ -110,10 +107,12 @@ public class LoginActivity extends AppCompatActivity {
                         passwordView.requestFocus();
                         passwordView.setText("");
                     }
+                    progressBar.setVisibility(View.GONE);
                 } else {
                     usernameView.setError(getString(R.string.error_invalid_username));
                     usernameView.requestFocus();
                     passwordView.setText("");
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         }
@@ -124,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isPasswordValid(String password){
-        return password.length()>=4;
+        return password.length()>4;
     }
 
     private void showError(EditText input, String s){
