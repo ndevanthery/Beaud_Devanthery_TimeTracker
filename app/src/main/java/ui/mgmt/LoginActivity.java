@@ -17,6 +17,8 @@ import androidx.lifecycle.LiveData;
 
 import com.example.beaud_devanthery_timetracker.R;
 
+import java.util.List;
+
 import baseapp.BaseApp;
 import database.AppDataBase;
 import database.entity.EmployeeEntity;
@@ -99,6 +101,16 @@ public class LoginActivity extends AppCompatActivity {
         }else{
 //            progressBar.setVisibility(View.VISIBLE);
             LiveData<EmployeeEntity> myData = repository.getEmployee(stUsername,getApplication());
+            EmployeeEntity value = myData.getValue();
+
+            LiveData<List<EmployeeEntity>> employees = repository.getEmployees(getApplication());
+            List<EmployeeEntity> value1 = employees.getValue();
+            for(EmployeeEntity e : value1)
+            {
+                System.out.println(e.getUsername());
+            }
+
+
             repository.getEmployee(stUsername, getApplication()).observe(LoginActivity.this, employeeEntity -> {
                 if (employeeEntity != null) {
                     if (employeeEntity.equals(stPassword)) {
