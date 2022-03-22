@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.example.timetracker.ui.history.HistoryFragment"
+        android:name="ui.mgmt.history.HistoryFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_Add"
-        android:name="com.example.timetracker.ui.createtask.CreateTaskFragment"
+        android:name="ui.mgmt.createtask.CreateTaskFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_createtask" />
 
     <fragment
         android:id="@+id/navigation_Profile"
-        android:name="com.example.timetracker.ui.profile.ProfileFragment"
+        android:name="ui.mgmt.profile.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" />
 </navigation>

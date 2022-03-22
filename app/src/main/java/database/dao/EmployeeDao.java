@@ -32,8 +32,8 @@ public abstract class EmployeeDao {
 
 
     //Select sur un employée
-    @Query("SELECT * FROM employee WHERE Username = :id")
-    public abstract LiveData<EmployeeEntity> getById(String id);
+    @Query("SELECT * FROM employee WHERE Username = :username")
+    public abstract LiveData<EmployeeEntity> getById(String username);
 
     @Query("SELECT * FROM employee")
     public abstract LiveData<List<EmployeeEntity>> getAll();

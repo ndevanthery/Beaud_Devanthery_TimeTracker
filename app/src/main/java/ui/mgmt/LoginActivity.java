@@ -99,21 +99,9 @@ public class LoginActivity extends AppCompatActivity {
         if(cancel){
             focusView.requestFocus();
         }else{
-//            progressBar.setVisibility(View.VISIBLE);
-            LiveData<EmployeeEntity> myData = repository.getEmployee(stUsername,getApplication());
-            EmployeeEntity value = myData.getValue();
-
-            LiveData<List<EmployeeEntity>> employees = repository.getEmployees(getApplication());
-            List<EmployeeEntity> value1 = employees.getValue();
-            for(EmployeeEntity e : value1)
-            {
-                System.out.println(e.getUsername());
-            }
-
-
             repository.getEmployee(stUsername, getApplication()).observe(LoginActivity.this, employeeEntity -> {
                 if (employeeEntity != null) {
-                    if (employeeEntity.equals(stPassword)) {
+                    if (employeeEntity.getPassword().equals(stPassword)) {
                         SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
                         editor.putString(MainActivity.PREFS_USER, employeeEntity.getUsername());
                         editor.apply();
@@ -126,12 +114,10 @@ public class LoginActivity extends AppCompatActivity {
                         Password.requestFocus();
                         Password.setText("");
                     }
-//                    progressBar.setVisibility(View.GONE);
                 } else {
                     Username.setError(getString(R.string.error_invalid_username));
                     Username.requestFocus();
                     Username.setText("");
-//                    progressBar.setVisibility(View.GONE);
                 }
             });
         }
