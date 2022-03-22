@@ -41,6 +41,7 @@ public abstract class AppDataBase extends RoomDatabase {
                 if (instance == null) {
                     instance = buildDatabase(context.getApplicationContext());
                     instance.updateDatabaseCreated(context.getApplicationContext());
+                    instance.initializeDemoData(instance);
                 }
             }
         }
@@ -62,6 +63,7 @@ public abstract class AppDataBase extends RoomDatabase {
                         });
                     }
                 }).build();
+
     }
 
     public void initializeDemoData(final AppDataBase database) {
