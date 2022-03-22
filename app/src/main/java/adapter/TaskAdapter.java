@@ -1,4 +1,5 @@
 package adapter;
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import database.async.task.DeleteTask;
 import database.entity.TaskEntity;
+import util.OnAsyncEventListener;
 
 
 public class TaskAdapter extends ArrayAdapter<TaskEntity> {
@@ -26,13 +29,15 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
     private int layoutResourceId;
     private Context context;
     private LayoutInflater inflater;
+    private Application app;
 
-    public TaskAdapter(Context context, int layoutResourceId, List<TaskEntity> items, LayoutInflater inflater) {
+    public TaskAdapter(Context context, int layoutResourceId, List<TaskEntity> items, LayoutInflater inflater , Application app) {
         super(context, layoutResourceId, items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.items = items;
         this.inflater = inflater;
+        this.app = app;
     }
 
     @Override
@@ -83,9 +88,21 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.println(Log.ERROR,"DELETE PUSHED ",holder.task.getTaskname()+" asked to be deleted");
+                Log.println(Log.WARN,"DELETE PUSHED ",holder.task.getTaskname()+" asked to be deleted");
                 TaskEntity itemToRemove = (TaskEntity) view.getTag();
                 remove(itemToRemove);
+                new DeleteTask(app, new OnAsyncEventListener() {
+
+                    @Override
+                    public void onSuccess() {
+                        System.out.println("La task a bien été supprimée");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        System.out.println("La task ne s'est pas supprimée");
+                    }
+                }).execute(itemToRemove);
             }
         });
     }

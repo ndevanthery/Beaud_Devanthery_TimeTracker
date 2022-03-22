@@ -40,17 +40,6 @@ public class HistoryFragment extends Fragment {
     ListView list;
     private TaskAdapter myAdapter;
     ListView simpleList;
-    String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand","India", "China", "australia", "Portugle", "America", "NewZealand"};
-    List<HashMap> myList = new ArrayList<HashMap>();
-    String from[] = {"title" , "startTime","endTime","date"};
-    int to[]={R.id.lblTitle, R.id.lblStartTask, R.id.lblEndTask,R.id.lblDate};
-    String titles[] = {"titre1","titre2","titre3","titre4"};
-    String starttimes[] = {"starttimes1","starttimes2","starttimes3","starttimes4"};
-    int starttimesint[] = {12,16,22,26};
-    String endtimes[]={"endtime1","endtime2","endtime3","endtime4"};
-    int endtimesint[]={23,45,63,21};
-    String dates[]={"date1","date2","date3","date4"};
-    int datesint[]={76,7,4,24};
     List<TaskEntity> myListOfTasks;
 
     private TaskRepository repository;
@@ -66,36 +55,10 @@ public class HistoryFragment extends Fragment {
 
         myListOfTasks = new ArrayList<>();
 
-
-
-        // By a for loop, entering different types of data in HashMap,
-        // and adding this map including it's datas into the ArrayList
-        // as list item and this list is the second parameter of the SimpleAdapter
-//        for (int i = 0; i < titles.length; i++) {
-//
-//            // creating an Object of HashMap class
-//            HashMap<String, Object> map = new HashMap<>();
-//
-//            // Data entry in HashMap
-//            map.put("title", titles[i]);
-//            map.put("startTime", starttimes[i]);
-//            map.put("endTime", endtimes[i]);
-//            map.put("date", dates[i]);
-//
-//            TaskEntity mytask = new TaskEntity();
-//            mytask.setTaskname(titles[i]);
-//            mytask.setStartTime(starttimesint[i]);
-//            mytask.setEndTime(endtimesint[i]);
-//            mytask.setDate(dates[i]);
-//            myListOfTasks.add(mytask);
-//
-//            // adding the HashMap to the ArrayList
-//            listmap.add(map);
-//        }
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         list = (ListView)root.findViewById(R.id.myListViewHistory);
-        myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater);
+        myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater,getActivity().getApplication());
         list.setAdapter(myAdapter);
 
 
