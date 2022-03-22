@@ -66,8 +66,12 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
 
     private void setupItem(TaskHolder holder) {
         holder.title.setText(holder.task.getTaskname());
-        holder.startTime.setText(Integer.toString(holder.task.getStartTime()));
-        holder.endTime.setText(Integer.toString(holder.task.getEndTime()));
+        int startMinute = holder.task.getStartTime()%60;
+        int startHour =( holder.task.getStartTime() - startMinute) /60 ;
+        holder.startTime.setText(String.format("start time :%02d:%02d", startHour, startMinute));
+        int endMinute = holder.task.getEndTime()%60;
+        int endHour = (holder.task.getEndTime() - endMinute)/60;
+        holder.endTime.setText(String.format("end time :%02d:%02d", endHour, endMinute));
         holder.date.setText(holder.task.getDate());
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override

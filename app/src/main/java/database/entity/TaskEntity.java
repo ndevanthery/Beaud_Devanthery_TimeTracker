@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 public class TaskEntity {
     @PrimaryKey(autoGenerate = true)
     private Long id;
+    //private Long id_employee;
     private String Taskname;
     private String Description;
     private int StartTime;
@@ -99,4 +100,12 @@ public class TaskEntity {
     public String toString(){
         return Taskname;
     }
+
+//    public Long getId_employee() {
+//        return id_employee;
+//    }
+//
+//    public void setId_employee(Long id_employee) {
+//        this.id_employee = id_employee;
+//    }
 }

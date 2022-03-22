@@ -17,6 +17,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.beaud_devanthery_timetracker.databinding.FragmentCreatetaskBinding;
 
 import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
+
+import database.async.employee.CreateEmployee;
+import database.async.task.CreateTask;
+import database.entity.TaskEntity;
+import util.OnAsyncEventListener;
 
 public class CreateTaskFragment extends Fragment {
 
@@ -41,6 +48,7 @@ public class CreateTaskFragment extends Fragment {
                 String startTime = binding.txtStartTime.getText().toString();
                 String title = binding.txtTitle.getText().toString();
 
+
                 ////////////////////////////////////////////////////////////////////
                 //// test if the end is not before start?
                 ////////////////////////////////////////////////////////////////////
@@ -54,8 +62,36 @@ public class CreateTaskFragment extends Fragment {
                 ////////////////////////////////////////////////////////////////////
                 //// store in the DB to add
                 ////////////////////////////////////////////////////////////////////
+                TaskEntity newTask = new TaskEntity();
+                newTask.setDescription(description);
+                String[] startSplit = startTime.split(":");
 
-                System.out.println(title+" | "+ description + " | " + startTime + " | " + endTime );
+                String[] endSplit = endTime.split(":");
+                int endHour = Integer.parseInt(endSplit[0]);
+                int endMinute = Integer.parseInt(endSplit[1]);
+                int startHour = Integer.parseInt(startSplit[0]);
+                int startMinute = Integer.parseInt(startSplit[1]);
+
+                newTask.setEndTime(endHour*60 + endMinute);
+                newTask.setStartTime(startHour*60 + startMinute);
+                newTask.setTaskname(title);
+                Date today = Calendar.getInstance().getTime();
+                String myDate =String.format("%02d.%02d.%04d", today.getDay() , today.getMonth() , today.getYear()+1900);
+                newTask.setDate(myDate);
+
+                new CreateTask(getActivity().getApplication(), new OnAsyncEventListener() {
+
+                    @Override
+                    public void onSuccess() {
+                        System.out.println("La task a bien été ajouté");
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        System.out.println("La task ne s'est pas ajouté");
+                    }
+                }).execute(newTask);
+
 
             }
         });

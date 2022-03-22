@@ -1,5 +1,7 @@
 package ui.mgmt.history;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.SimpleAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 
@@ -22,7 +25,12 @@ import java.util.List;
 import java.util.Map;
 
 import adapter.TaskAdapter;
+import baseapp.BaseApp;
 import database.entity.TaskEntity;
+import database.repository.EmployeeRepository;
+import database.repository.TaskRepository;
+import ui.mgmt.LoginActivity;
+import ui.mgmt.MainActivity;
 
 
 public class HistoryFragment extends Fragment {
@@ -43,6 +51,10 @@ public class HistoryFragment extends Fragment {
     int endtimesint[]={23,45,63,21};
     String dates[]={"date1","date2","date3","date4"};
     int datesint[]={76,7,4,24};
+    List<TaskEntity> myListOfTasks;
+
+    private TaskRepository repository;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,47 +62,61 @@ public class HistoryFragment extends Fragment {
         HistoryViewModel homeViewModel =
                 new ViewModelProvider(this).get(HistoryViewModel.class);
 
-        ArrayList<HashMap<String, Object>> listmap = new ArrayList<>();
+        repository = ((BaseApp)getActivity().getApplication()).getTaskRepository();
 
-        ArrayList<TaskEntity> myListOfTasks = new ArrayList<>();
+        myListOfTasks = new ArrayList<>();
+
+
+
         // By a for loop, entering different types of data in HashMap,
         // and adding this map including it's datas into the ArrayList
         // as list item and this list is the second parameter of the SimpleAdapter
-        for (int i = 0; i < titles.length; i++) {
-
-            // creating an Object of HashMap class
-            HashMap<String, Object> map = new HashMap<>();
-
-            // Data entry in HashMap
-            map.put("title", titles[i]);
-            map.put("startTime", starttimes[i]);
-            map.put("endTime", endtimes[i]);
-            map.put("date", dates[i]);
-
-            TaskEntity mytask = new TaskEntity();
-            mytask.setTaskname(titles[i]);
-            mytask.setStartTime(starttimesint[i]);
-            mytask.setEndTime(endtimesint[i]);
-            mytask.setDate(dates[i]);
-            myListOfTasks.add(mytask);
-
-            // adding the HashMap to the ArrayList
-            listmap.add(map);
-        }
-
-
-
-
+//        for (int i = 0; i < titles.length; i++) {
+//
+//            // creating an Object of HashMap class
+//            HashMap<String, Object> map = new HashMap<>();
+//
+//            // Data entry in HashMap
+//            map.put("title", titles[i]);
+//            map.put("startTime", starttimes[i]);
+//            map.put("endTime", endtimes[i]);
+//            map.put("date", dates[i]);
+//
+//            TaskEntity mytask = new TaskEntity();
+//            mytask.setTaskname(titles[i]);
+//            mytask.setStartTime(starttimesint[i]);
+//            mytask.setEndTime(endtimesint[i]);
+//            mytask.setDate(dates[i]);
+//            myListOfTasks.add(mytask);
+//
+//            // adding the HashMap to the ArrayList
+//            listmap.add(map);
+//        }
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        //simpleList.setAdapter(arrayAdapter);
-//        View v = inflater.inflate(R.layout.fragment_history, container,false);
         list = (ListView)root.findViewById(R.id.myListViewHistory);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(),R.layout.fragment_history,R.id.txt,countryList);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.history_task_fragment, R.id.lblTitle, countryList);
-        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), listmap, R.layout.history_task_fragment, from,to);
         myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater);
         list.setAdapter(myAdapter);
+
+
+        LiveData<List<TaskEntity>> taks = repository.getTaks(getActivity().getApplication());
+        repository.getTaks(getActivity().getApplication()).observe(getActivity(), taskEntities -> {
+            if (taskEntities != null) {
+                System.out.println("HERE IS THE TASK DB:");
+                for(int i=0;i<taskEntities.size();i++)
+                {
+
+                    System.out.println(taskEntities.get(i).getTaskname() +" | " + taskEntities.get(i).getDescription() + " | " + taskEntities.get(i).getDate());
+                    myListOfTasks.add(taskEntities.get(i));
+                    list.setAdapter(myAdapter);
+                }
+            } else {
+                System.out.println("NO TASKS MAYDAY");
+            }
+        });
+
+
+
 
 
 
