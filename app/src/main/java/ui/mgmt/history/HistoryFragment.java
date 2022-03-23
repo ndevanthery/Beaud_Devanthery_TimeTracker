@@ -58,6 +58,7 @@ public class HistoryFragment extends Fragment {
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         list = (ListView)root.findViewById(R.id.myListViewHistory);
+        myListOfTasks = new ArrayList<>();
         myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater,getActivity().getApplication(),root.getContext(),getParentFragmentManager());
         list.setAdapter(myAdapter);
 
@@ -65,11 +66,12 @@ public class HistoryFragment extends Fragment {
         LiveData<List<TaskEntity>> taks = repository.getTaks(getActivity().getApplication());
         repository.getTaks(getActivity().getApplication()).observe(getActivity(), taskEntities -> {
             if (taskEntities != null) {
-                System.out.println("HERE IS THE TASK DB:");
+                myListOfTasks.clear();
+
+
                 for(int i=0;i<taskEntities.size();i++)
                 {
 
-                    System.out.println(taskEntities.get(i).getTaskname() +" | " + taskEntities.get(i).getDescription() + " | " + taskEntities.get(i).getDate());
                     myListOfTasks.add(taskEntities.get(i));
                     list.setAdapter(myAdapter);
                 }
@@ -81,11 +83,6 @@ public class HistoryFragment extends Fragment {
 
 
 
-
-
-//        HistoryTaskView myTask = new HistoryTaskView(binding.getRoot().getContext())
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

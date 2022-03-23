@@ -12,6 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.beaud_devanthery_timetracker.databinding.FragmentProfileBinding;
 
+import database.entity.EmployeeEntity;
+import ui.mgmt.LoginActivity;
+import ui.mgmt.MyAlertDialog;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -24,6 +28,24 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        EmployeeEntity myProfile = LoginActivity.LOGGED_EMPLOYEE;
+
+        binding.lblEmail.setText(myProfile.getEmail());
+        binding.lblFirstName.setText(myProfile.getFirstName());
+        binding.lblName.setText(myProfile.getName());
+        binding.lblNumber.setText(myProfile.getTelnumber());
+
+
+        binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyAlertDialog ad = new MyAlertDialog(getContext(),"Delete account ? ","are you sure you want to delete this account?","delete");
+                ad.deleteAccount(myProfile,getActivity().getApplication());
+
+            }
+        });
+
 
 //        final TextView textView = binding.textNotifications;
 //        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

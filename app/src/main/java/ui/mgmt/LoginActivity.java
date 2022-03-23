@@ -27,6 +27,8 @@ import database.repository.EmployeeRepository;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static EmployeeEntity LOGGED_EMPLOYEE;
+
     private AutoCompleteTextView usernameView;
     private AutoCompleteTextView passwordView;
     private Button buttonLogin;
@@ -106,9 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(MainActivity.PREFS_USER, employeeEntity.getUsername());
                         editor.apply();
 
+                        LOGGED_EMPLOYEE = employeeEntity;
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         Username.setText("");
+                        Password.setText("");
                     } else {
                         Password.setError(getString(R.string.error_incorrect_password));
                         Password.requestFocus();

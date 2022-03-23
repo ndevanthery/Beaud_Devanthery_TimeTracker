@@ -10,11 +10,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Delete;
 
 import com.example.beaud_devanthery_timetracker.R;
 
+import database.async.employee.DeleteEmployee;
+import database.async.task.CreateTask;
+import database.entity.EmployeeEntity;
 import database.entity.TaskEntity;
 import ui.mgmt.modifytask.ModifyTask;
+import util.OnAsyncEventListener;
 
 public class MyAlertDialog {
 
@@ -101,6 +106,35 @@ public class MyAlertDialog {
 // Commit the transaction
             transaction.commit();
 
+        });
+        myAlert.setNegativeButton(dialogNoBtn, (dialog, which) -> dialog.dismiss());
+        myAlert.show();
+    }
+
+    public void deleteAccount(EmployeeEntity employee,Application application){
+        myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
+            dialog.dismiss();
+            SharedPreferences.Editor editor = context.getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+            editor.remove(MainActivity.PREFS_USER);
+            editor.apply();
+
+            new DeleteEmployee(application, new OnAsyncEventListener() {
+
+                @Override
+                public void onSuccess() {
+                    System.out.println("L'employé a été supprimé");
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("L'employé n'a pas été supprimé");
+                }
+            }).execute(employee);
+
+            Intent intent= new  Intent(context, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            context.startActivity(intent);
         });
         myAlert.setNegativeButton(dialogNoBtn, (dialog, which) -> dialog.dismiss());
         myAlert.show();

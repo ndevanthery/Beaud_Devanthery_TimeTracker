@@ -118,8 +118,11 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
                         System.out.println("La task ne s'est pas supprimée");
                     }
                 }).execute(itemToRemove);
-
                 remove(itemToRemove);
+
+
+
+
             }
         });
     }
