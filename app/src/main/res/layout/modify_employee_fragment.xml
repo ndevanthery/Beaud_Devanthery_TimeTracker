@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ui.mgmt.CreateAccountActivity">
+    tools:context="ui.mgmt.modifyemployee.ModifyEmployee">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="380dp"
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="Register"
-                    android:text="@string/btnRegister_profile" />
+                    android:text="Button" />
 
                 <Button
                     android:id="@+id/button"

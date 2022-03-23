@@ -8,13 +8,17 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.beaud_devanthery_timetracker.R;
 import com.example.beaud_devanthery_timetracker.databinding.FragmentProfileBinding;
 
 import database.entity.EmployeeEntity;
 import ui.mgmt.LoginActivity;
 import ui.mgmt.MyAlertDialog;
+import ui.mgmt.modifyemployee.ModifyEmployee;
+import ui.mgmt.modifytask.ModifyTask;
 
 
 public class ProfileFragment extends Fragment {
@@ -35,6 +39,30 @@ public class ProfileFragment extends Fragment {
         binding.lblFirstName.setText(myProfile.getFirstName());
         binding.lblName.setText(myProfile.getName());
         binding.lblNumber.setText(myProfile.getTelnumber());
+
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyAlertDialog ad = new MyAlertDialog(getContext(),"Logout ? ","are you sure you want to log out","log out");
+                ad.backToLoginPage();
+
+            }
+        });
+
+        binding.btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                transaction.setReorderingAllowed(true);
+
+// Replace whatever is in the fragment_container view with this fragment
+                transaction.replace(R.id.nav_host_fragment_activity_main, ModifyEmployee.class,null);
+
+// Commit the transaction
+                transaction.commit();
+            }
+        });
 
 
         binding.btnDelete.setOnClickListener(new View.OnClickListener() {

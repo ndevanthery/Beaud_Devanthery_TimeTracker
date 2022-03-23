@@ -57,14 +57,10 @@ public class MyAlertDialog {
     public void backToLoginPage(){
         myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
             dialog.dismiss();
-            System.out.println("------------------------");
-            System.out.println("LOGOUT  DONE");
-            System.out.println(" by the User");
-            System.out.println("------------------------");
             SharedPreferences.Editor editor = context.getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
             editor.remove(MainActivity.PREFS_USER);
             editor.apply();
-
+            LoginActivity.LOGGED_EMPLOYEE=null;
             Intent intent= new  Intent(context, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
