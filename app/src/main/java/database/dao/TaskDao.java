@@ -32,6 +32,7 @@ public abstract class TaskDao {
     public abstract void delete(TaskEntity task);
 
 
+
     //Select sur une tache
     @Query("SELECT * FROM task WHERE id = :id")
     public abstract LiveData<TaskEntity> getById(Long id);

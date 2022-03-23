@@ -1,11 +1,15 @@
 package ui.mgmt.settings;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.UiModeManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,39 +20,37 @@ import com.example.beaud_devanthery_timetracker.R;
 import com.example.beaud_devanthery_timetracker.databinding.FragmentHistoryBinding;
 import com.example.beaud_devanthery_timetracker.databinding.FragmentSettingsBinding;
 
+import ui.mgmt.MyAlertDialog;
+
 public class SettingsFragment extends Fragment {
     private Button aboutUs;
     private FragmentSettingsBinding binding;
     private View root;
+    private UiModeManager uiModeManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        System.out.println("java of settings");
+        uiModeManager = (UiModeManager) getActivity().getSystemService(getActivity().getBaseContext().UI_MODE_SERVICE);
+        getActivity().setTheme(R.style.Theme_Dark);
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        aboutUs = root.findViewById(R.id.btnAboutUs);
-        aboutUs.setOnClickListener(new View.OnClickListener() {
+        //aboutUs = root.findViewById(R.id.btnAboutUs);
+        binding.btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println("about us clicked");
-                new StartGameDialogFragment();
+
+                MyAlertDialog ad = new MyAlertDialog(root.getContext(), "about us", "TimeTracker was developped by Nicolas Devanthery & Simon beaud in 2022 Android developpment course in HES-SO. It has been supervised by Dr. Schumacher and his Assistant Yvan Pannatier", "OK");
+                ad.aboutUs();
             }
         });
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return root;
     }
 
 
-
-    class StartGameDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("SALUT");
-            // Create the AlertDialog object and return it
-            return builder.create();
-        }
-    }
 
 }

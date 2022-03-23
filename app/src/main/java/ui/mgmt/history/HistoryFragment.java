@@ -58,7 +58,7 @@ public class HistoryFragment extends Fragment {
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         list = (ListView)root.findViewById(R.id.myListViewHistory);
-        myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater,getActivity().getApplication());
+        myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater,getActivity().getApplication(),root.getContext(),getParentFragmentManager());
         list.setAdapter(myAdapter);
 
 

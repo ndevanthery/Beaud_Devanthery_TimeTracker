@@ -20,9 +20,11 @@ public class UpdateTask extends AsyncTask<TaskEntity, Void, Void> {
 
     @Override
     protected Void doInBackground(TaskEntity... taskEntities) {
+        System.out.println("hello, im updating");
         try{
             for(TaskEntity task : taskEntities){
                 ((BaseApp)application).getDatabase().taskDao().update(task);
+                System.out.println(task.getTaskname());
             }
         }catch(Exception e){
             exception = e;

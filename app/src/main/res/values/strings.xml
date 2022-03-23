@@ -17,6 +17,7 @@
     <!-- CREATE TASK fragment  -->
     <!-- labels-->
     <string name="CreateTask_lbl">Create a new task</string>
+    <string name="modifyTask_lbl">modify a task</string>
     <string name="CreateTask_TaskName_lbl">Task name</string>
     <string name="CreateTask_Description_lbl">Description</string>
     <string name="CreateTask_StartTime_lbl">Start Time:</string>
@@ -32,6 +33,9 @@
     <!-- buttons text   -->
 
     <string name="createTask_create_btn">create</string>
+    <string name="modifyTask_create_btn">modify</string>
+    <string name="modifyTask_cancel_btn">cancel</string>
+
 
     <!-- HISTORY FRAGMENT-->
     <!--  labels  -->

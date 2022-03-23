@@ -9,12 +9,13 @@
     <ListView
         android:id="@+id/myListViewHistory"
         android:layout_width="415dp"
-        android:layout_height="733dp"
+        android:layout_height="700dp"
+
+
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
         android:divider="@color/white"
         android:dividerHeight="30dp"
-
-
-        android:paddingBottom="105dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

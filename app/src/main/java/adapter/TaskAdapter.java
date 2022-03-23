@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.example.beaud_devanthery_timetracker.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 import database.async.task.DeleteTask;
 import database.entity.TaskEntity;
+import ui.mgmt.MyAlertDialog;
 import util.OnAsyncEventListener;
 
 
@@ -28,16 +31,20 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
     private List<TaskEntity> items;
     private int layoutResourceId;
     private Context context;
+    private Context fragmentContext;
     private LayoutInflater inflater;
     private Application app;
+    private FragmentManager fragmentManager;
 
-    public TaskAdapter(Context context, int layoutResourceId, List<TaskEntity> items, LayoutInflater inflater , Application app) {
+    public TaskAdapter(Context context, int layoutResourceId, List<TaskEntity> items, LayoutInflater inflater , Application app, Context fragmentContext, FragmentManager fragmentManager) {
         super(context, layoutResourceId, items);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.items = items;
         this.inflater = inflater;
         this.app = app;
+        this.fragmentContext = fragmentContext;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -81,7 +88,15 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.println(Log.WARN,"DETAILS PUSHED",holder.task.getTaskname()+" asked for his details");
+                TaskEntity task = holder.task;
+
+                Log.println(Log.WARN,"DETAILS PUSHED",task.getTaskname()+" asked for his details");
+                String startTime = Integer.toString(task.getStartTime()/60) + ":" + Integer.toString(task.getStartTime()%60);
+                String endTime = Integer.toString(task.getEndTime()/60) + ":" + Integer.toString(task.getEndTime()%60);
+                String title = task.getTaskname() + " on " + task.getDate();
+                String message = holder.task.getDescription() + "\n\nfrom " + startTime + " to " + endTime;
+                MyAlertDialog ad = new MyAlertDialog(fragmentContext,title,message,"modify");
+                ad.details(fragmentManager,(TaskEntity)view.getTag());
 //                System.out.println(YELLOW +"DETAILS BUTTON WAS PUSHED ON " + holder.task.getTaskname()+RESET);
             }
         });
@@ -90,7 +105,7 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
             public void onClick(View view) {
                 Log.println(Log.WARN,"DELETE PUSHED ",holder.task.getTaskname()+" asked to be deleted");
                 TaskEntity itemToRemove = (TaskEntity) view.getTag();
-                remove(itemToRemove);
+
                 new DeleteTask(app, new OnAsyncEventListener() {
 
                     @Override
@@ -103,6 +118,8 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
                         System.out.println("La task ne s'est pas supprimée");
                     }
                 }).execute(itemToRemove);
+
+                remove(itemToRemove);
             }
         });
     }
