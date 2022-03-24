@@ -157,14 +157,14 @@
                     android:inputType="number" />
 
                 <Button
-                    android:id="@+id/createAccount_buttonRegister"
+                    android:id="@+id/modifyProfileButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="Register"
                     android:text="@string/btnRegister_profile" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/modifyProfile_backbtn"
                     android:layout_width="348dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="1dp"

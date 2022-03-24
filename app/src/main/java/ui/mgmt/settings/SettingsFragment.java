@@ -26,7 +26,6 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         System.out.println("java of settings");
-        uiModeManager = (UiModeManager) getActivity().getSystemService(getActivity().getBaseContext().UI_MODE_SERVICE);
         getActivity().setTheme(R.style.Theme_Dark);
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();

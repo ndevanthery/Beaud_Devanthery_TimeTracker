@@ -1,5 +1,6 @@
 package ui.mgmt.modifyemployee;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.view.ViewGroup;
 import com.example.beaud_devanthery_timetracker.R;
 import com.example.beaud_devanthery_timetracker.databinding.FragmentProfileBinding;
 import com.example.beaud_devanthery_timetracker.databinding.ModifyEmployeeFragmentBinding;
+
+import ui.mgmt.history.HistoryFragment;
+import ui.mgmt.profile.ProfileFragment;
 
 public class ModifyEmployee extends Fragment {
 
@@ -33,11 +37,36 @@ public class ModifyEmployee extends Fragment {
         binding = ModifyEmployeeFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        binding.modifyProfileBackbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setReorderingAllowed(true);
+                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
+                transaction.commit();
+            }
+        });
+
+        binding.modifyProfileBackbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setReorderingAllowed(true);
+                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
+                transaction.commit();
+            }
+        });
+
 
 
 
         return root;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
 
+        binding = null;
+    }
 }

@@ -19,9 +19,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/_l_ment_2" />
+            app:srcCompat="@drawable/_l_ment_2"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -157,20 +159,18 @@
                     android:inputType="number" />
 
                 <Button
-                    android:id="@+id/createAccount_buttonRegister"
+                    android:id="@+id/modifyProfileButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="Register"
-                    android:text="Button" />
+                    android:text="Modify" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/modifyProfile_backbtn"
                     android:layout_width="348dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="148dp"
-                    android:onClick="backLogin"
                     android:text="Back" />
 
             </LinearLayout>

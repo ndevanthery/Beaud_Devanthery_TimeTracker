@@ -113,4 +113,14 @@ public class ModifyTask extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//        transaction.setReorderingAllowed(true);
+//        transaction.replace(R.id.nav_host_fragment_activity_main, HistoryFragment.class,null);
+//        transaction.commit();
+        binding = null;
+    }
+
 }

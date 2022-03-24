@@ -1,9 +1,7 @@
 package ui.mgmt;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
 import com.example.beaud_devanthery_timetracker.R;
 
 
@@ -40,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         database = AppDataBase.getInstance(this.getBaseContext());
-        buttonRegister= findViewById(R.id.createAccount_buttonRegister);
+        buttonRegister= findViewById(R.id.modifyProfileButton);
 
         Name = findViewById(R.id.createAccount_lastname);
         Firstname= findViewById(R.id.createAccount_firstname);

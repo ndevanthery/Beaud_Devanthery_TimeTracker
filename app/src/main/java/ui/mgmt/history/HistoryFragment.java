@@ -48,8 +48,6 @@ public class HistoryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HistoryViewModel homeViewModel =
-                new ViewModelProvider(this).get(HistoryViewModel.class);
 
         repository = ((BaseApp)getActivity().getApplication()).getTaskRepository();
 
