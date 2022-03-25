@@ -54,8 +54,21 @@ public class ProfileFragment extends Fragment {
 
                 transaction.setReorderingAllowed(true);
 
+                Bundle args = new Bundle();
+                args.putLong("id", myProfile.getId());
+                args.putString("username",myProfile.getUsername());
+                args.putString("password",myProfile.getPassword());
+                args.putString("email",myProfile.getEmail());
+                args.putString("firstname",myProfile.getFirstName());
+                args.putString("name",myProfile.getName());
+                args.putString("number",myProfile.getTelnumber());
+                args.putString("address",myProfile.getAddress());
+                args.putString("function",myProfile.getFunction());
+                args.putString("npa",myProfile.getNPA());
+                args.putBoolean("admin",myProfile.getAdmin());
+
 // Replace whatever is in the fragment_container view with this fragment
-                transaction.replace(R.id.nav_host_fragment_activity_main, ModifyEmployee.class,null);
+                transaction.replace(R.id.nav_host_fragment_activity_main, ModifyEmployee.class,args);
 
 // Commit the transaction
                 transaction.commit();
