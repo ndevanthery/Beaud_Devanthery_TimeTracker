@@ -23,6 +23,7 @@ import java.util.Date;
 import database.async.employee.CreateEmployee;
 import database.async.task.CreateTask;
 import database.entity.TaskEntity;
+import ui.mgmt.LoginActivity;
 import util.OnAsyncEventListener;
 
 public class CreateTaskFragment extends Fragment {
@@ -78,6 +79,7 @@ public class CreateTaskFragment extends Fragment {
                 Date today = Calendar.getInstance().getTime();
                 String myDate =String.format("%02d.%02d.%04d", today.getDay() , today.getMonth() , today.getYear()+1900);
                 newTask.setDate(myDate);
+                newTask.setIdEmployee(LoginActivity.LOGGED_EMPLOYEE.getId());
 
                 new CreateTask(getActivity().getApplication(), new OnAsyncEventListener() {
 
@@ -95,10 +97,6 @@ public class CreateTaskFragment extends Fragment {
 
             }
         });
-
-
-
-
 
         return root;
 

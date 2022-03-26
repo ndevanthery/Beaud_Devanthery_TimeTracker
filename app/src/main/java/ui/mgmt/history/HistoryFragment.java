@@ -61,8 +61,7 @@ public class HistoryFragment extends Fragment {
         list.setAdapter(myAdapter);
 
 
-        LiveData<List<TaskEntity>> taks = repository.getTaks(getActivity().getApplication());
-        repository.getTaks(getActivity().getApplication()).observe(getActivity(), taskEntities -> {
+        repository.getTasksOfEmployee(getActivity().getApplication(),LoginActivity.LOGGED_EMPLOYEE.getId()).observe(getActivity(), taskEntities -> {
             if (taskEntities != null) {
                 myListOfTasks.clear();
 

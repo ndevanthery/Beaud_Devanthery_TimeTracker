@@ -18,24 +18,28 @@ public class TaskEntity {
     private int StartTime;
     private int EndTime;
     private String Date;
+    private long idEmployee;
 
 
     public TaskEntity() {
 
     }
 
+
     public TaskEntity(
             String Taskname,
             String Description,
             int StartTime,
             int EndTime,
-            String Date
+            String Date,
+            long idEmployee
     ) {
         this.Taskname = Taskname;
         this.Description = Description;
         this.StartTime = StartTime;
         this.EndTime = EndTime;
         this.Date = Date;
+        this.idEmployee = idEmployee;
     }
 
     public Long getId() {
@@ -84,6 +88,14 @@ public class TaskEntity {
 
     public void setDate(String date) {
         Date = date;
+    }
+
+    public long getIdEmployee() {
+        return idEmployee;
+    }
+
+    public void setIdEmployee(long idEmployee) {
+        this.idEmployee = idEmployee;
     }
 
 

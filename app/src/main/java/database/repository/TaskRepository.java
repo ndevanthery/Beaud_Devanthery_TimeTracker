@@ -44,6 +44,10 @@ public class TaskRepository {
         return ((BaseApp) application).getDatabase().taskDao().getAll();
     }
 
+    public LiveData<List<TaskEntity>> getTasksOfEmployee(Application application , long employeeId){
+        return ((BaseApp) application).getDatabase().taskDao().getTasksOfEmployee(employeeId);
+    }
+
     //Insertion d'un employée
     public void insert(final TaskEntity task, OnAsyncEventListener callback, Application application){
         new CreateTask(application, callback).execute(task);

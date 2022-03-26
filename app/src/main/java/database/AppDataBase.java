@@ -20,8 +20,9 @@ import database.entity.EmployeeEntity;
 import database.entity.TaskEntity;
 
 
-@Database(entities = {EmployeeEntity.class, TaskEntity.class}, version = 1)
+@Database(entities = {EmployeeEntity.class, TaskEntity.class}, version = 2)
 public abstract class AppDataBase extends RoomDatabase {
+
 
     private static final String TAG ="AppDatabase";
 
@@ -50,7 +51,7 @@ public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase buildDatabase(final Context appContext) {
         Log.i(TAG, "Database will be initialized.");
-        return Room.databaseBuilder(appContext, AppDataBase.class, DATABASE_NAME)
+        return Room.databaseBuilder(appContext, AppDataBase.class, DATABASE_NAME).fallbackToDestructiveMigration()
                 .addCallback(new Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {

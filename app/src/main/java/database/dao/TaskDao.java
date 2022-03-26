@@ -43,4 +43,7 @@ public abstract class TaskDao {
     //delete all
     @Query("DELETE FROM task")
     public abstract void deleteAll();
+
+    @Query("SELECT * FROM task WHERE idEmployee= :employeeId")
+    public abstract LiveData<List<TaskEntity>> getTasksOfEmployee(long employeeId);
 }

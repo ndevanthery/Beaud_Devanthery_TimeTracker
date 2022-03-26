@@ -19,6 +19,7 @@ import com.example.beaud_devanthery_timetracker.databinding.ModifyTaskFragmentBi
 import database.async.employee.UpdateEmployee;
 import database.async.task.UpdateTask;
 import database.entity.TaskEntity;
+import ui.mgmt.LoginActivity;
 import ui.mgmt.history.HistoryFragment;
 import util.OnAsyncEventListener;
 
@@ -42,6 +43,7 @@ public class ModifyTask extends Fragment {
         String date = (String)arguments.get("date");
         int start = (int)arguments.get("start");
         int end = (int)arguments.get("end");
+
         System.out.println(title);
 
         binding = ModifyTaskFragmentBinding.inflate(inflater, container, false);
@@ -83,7 +85,7 @@ public class ModifyTask extends Fragment {
                 int endInt = endHour*60 + endMinute;
                 int startInt = startHour*60 + startMinute;
 
-                TaskEntity task = new TaskEntity(title,description,startInt,endInt,date);
+                TaskEntity task = new TaskEntity(title,description,startInt,endInt,date, LoginActivity.LOGGED_EMPLOYEE.getId());
                 task.setId(id);
 
 

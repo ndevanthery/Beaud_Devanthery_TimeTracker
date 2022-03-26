@@ -59,13 +59,15 @@ public class DatabaseInitializer {
                                 final String Description,
                                 final int StartTime,
                                 final int EndTime,
-                                final String Date){
+                                final String Date,
+                                final long idEmployee){
         TaskEntity task = new TaskEntity(
                 Taskname,
                 Description,
                 StartTime,
                 EndTime,
-                Date);
+                Date,
+                idEmployee);
 
         db.taskDao().insert(task);
     }
@@ -96,7 +98,8 @@ public class DatabaseInitializer {
                 "Call client to present the news about the company",
                 1230,
                 1430,
-                "25.03.2022");
+                "25.03.2022",
+                1);
 
     }
 
