@@ -1,6 +1,7 @@
 package ui.mgmt.settings;
 
 
+import android.app.ActionBar;
 import android.app.UiModeManager;
 import android.os.Bundle;
 
@@ -29,9 +30,15 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        System.out.println("java of settings");
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(false); // disable the button
+            actionBar.setDisplayHomeAsUpEnabled(false); // remove the left caret
+            actionBar.setDisplayShowHomeEnabled(false); // remove the icon
+        }
 
         //aboutUs = root.findViewById(R.id.btnAboutUs);
         binding.btnAboutUs.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +72,11 @@ public class SettingsFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
 
+        binding = null;
+    }
 
 }
