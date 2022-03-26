@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="wrap_content"
+    android:background="@color/white"
+
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="329dp"
-        android:layout_height="181dp"
+        android:layout_height="121dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corner_view"
@@ -21,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="20dp"
             android:text="Title"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="80dp"
-            android:text="start Time : 00:00"
+            android:layout_marginTop="48dp"
+            android:text="Start Time : 00:00"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="80dp"
             android:text="End Time : 00:00"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="216dp"
-            android:layout_marginTop="116dp"
+            android:layout_marginTop="48dp"
             android:text="details"
             android:textColor="@color/black"
             android:textSize="10dp"

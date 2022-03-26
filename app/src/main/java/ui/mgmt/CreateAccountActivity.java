@@ -2,12 +2,15 @@ package ui.mgmt;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.se.omapi.Session;
+import android.service.carrier.CarrierMessagingService;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.net.MailTo;
 
 import com.example.beaud_devanthery_timetracker.R;
 
@@ -37,17 +40,17 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         database = AppDataBase.getInstance(this.getBaseContext());
-        buttonRegister= findViewById(R.id.modifyProfileButton);
+        buttonRegister = findViewById(R.id.modifyProfileButton);
 
         Name = findViewById(R.id.createAccount_lastname);
-        Firstname= findViewById(R.id.createAccount_firstname);
-        Function= findViewById(R.id.createAccount_function);
-        Telnumber= findViewById(R.id.createAccount_phone);
-        Email= findViewById(R.id.createAccount_email);
-        Address= findViewById(R.id.createAccount_address);
-        Username= findViewById(R.id.createAccount_username);
-        Password= findViewById(R.id.createAccount_password);
-        NPA= findViewById(R.id.createAccount_npa);
+        Firstname = findViewById(R.id.createAccount_firstname);
+        Function = findViewById(R.id.createAccount_function);
+        Telnumber = findViewById(R.id.createAccount_phone);
+        Email = findViewById(R.id.createAccount_email);
+        Address = findViewById(R.id.createAccount_address);
+        Username = findViewById(R.id.createAccount_username);
+        Password = findViewById(R.id.createAccount_password);
+        NPA = findViewById(R.id.createAccount_npa);
     }
 
 
@@ -63,6 +66,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String stPassword = (String) Password.getText().toString();
         Boolean stIsAdmin = false;
         String stNPA = (String) NPA.getText().toString();
+
 
         EmployeeEntity employee = new EmployeeEntity();
 
@@ -100,40 +104,34 @@ public class CreateAccountActivity extends AppCompatActivity {
     public boolean CheckIfEmpty() {
         boolean anyisempty = true;
 
-        if (Name.getText().toString().equals("")){
+        if (Name.getText().toString().equals("")) {
             showError(Name, "Can not be empty");
             return true;
         }
-        if (Firstname.getText().toString().equals(""))
-        {
+        if (Firstname.getText().toString().equals("")) {
             showError(Firstname, "Can not be empty");
             return true;
         }
-        if (Function.getText().toString().equals(""))
-        {
+        if (Function.getText().toString().equals("")) {
             showError(Function, "Can not be empty");
             return true;
         }
-        if (Telnumber.getText().toString().equals(""))
-        {
+        if (Telnumber.getText().toString().equals("")) {
             showError(Telnumber, "Can not be empty");
             return true;
         }
 
-        if (Email.getText().toString().equals(""))
-        {
+        if (Email.getText().toString().equals("")) {
             showError(Email, "Can not be empty");
             return true;
         }
 
-        if (Address.getText().toString().equals(""))
-        {
+        if (Address.getText().toString().equals("")) {
             showError(Address, "Can not be empty");
             return true;
         }
 
-        if (Username.getText().toString().equals(""))
-        {
+        if (Username.getText().toString().equals("")) {
             showError(Username, "Can not be empty");
             return true;
         }
@@ -144,140 +142,16 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (NPA.getText().toString().equals("")) {
             showError(NPA, "Can not be empty");
             return true;
-        }
-        else
+        } else
             return false;
     }
 
-    private void showError(EditText input, String s){
+    private void showError(EditText input, String s) {
         input.setError(s);
     }
 
-    public void backLogin(View view){
+    public void backLogin(View view) {
         startActivity(new Intent(this, LoginActivity.class));
     }
-
-
-
-
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
-        toast = Toast.makeText(this, getString(R.string.client_created), Toast.LENGTH_LONG);
-    }
-
-    public void Register(View view) {
-        Name = findViewById(R.id.createAccount_lastname);
-        Firstname= findViewById(R.id.createAccount_firstname);
-        Function= findViewById(R.id.createAccount_function);
-        Telnumber= findViewById(R.id.createAccount_phone);
-        Email= findViewById(R.id.createAccount_email);
-        Address= findViewById(R.id.createAccount_address);
-        Username= findViewById(R.id.createAccount_username);
-        Password= findViewById(R.id.createAccount_password);
-        NPA= findViewById(R.id.createAccount_npa);
-        Image_url ="nothing";
-        isAdmin=false;
-
-        buttonRegister= findViewById(R.id.createAccount_buttonRegister);
-
-        buttonRegister.setOnClickListener(view -> saveChanges(
-                Name.getText().toString(),
-                Firstname.getText().toString(),
-                Function.toString(),
-                Telnumber.toString(),
-                Email.getText().toString(),
-                Address.getText().toString(),
-                Username.getText().toString(),
-                Password.getText().toString(),
-                NPA.getText().toString(),
-                Image_url,
-                isAdmin
-        ));
-    }
-
-    private void saveChanges(String Name, String Firstname, String Function, String Telnumber, String Email, String Address, String Username, String Password, String NPA, String Image_url, Boolean isAdmin) {
-
-        EmployeeEntity newEmployee = new EmployeeEntity(Name, Firstname, Function, Telnumber, Email, Address, Username, Password, NPA, Image_url, isAdmin);
-        Toast.makeText(getApplicationContext(), "New account added to database", Toast.LENGTH_SHORT).show();
-
-        new CreateEmployee(getApplication(), new OnAsyncEventListener() {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "createUserWithUsername: success");
-                database.employeeDao().insert(newEmployee);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.d(TAG, "createUserWithEmail: failure", e);
-
-            }
-        }).execute(newEmployee);
-    }
-
-
-
-    public boolean CheckIfEmpty() {
-        boolean anyisempty = true;
-
-        if (Name.getText().toString().equals("")){
-            showError(Name, "Can not be empty");
-            return true;
-        }
-        if (Firstname.getText().toString().equals(""))
-        {
-            showError(Firstname, "Can not be empty");
-            return true;
-        }
-        if (Function.getText().toString().equals(""))
-        {
-            showError(Function, "Can not be empty");
-            return true;
-        }
-        if (Telnumber.getText().toString().equals(""))
-        {
-            showError(Telnumber, "Can not be empty");
-            return true;
-        }
-
-        if (Email.getText().toString().equals(""))
-        {
-            showError(Email, "Can not be empty");
-            return true;
-        }
-
-        if (Address.getText().toString().equals(""))
-        {
-            showError(Address, "Can not be empty");
-            return true;
-        }
-
-        if (Username.getText().toString().equals(""))
-        {
-            showError(Username, "Can not be empty");
-            return true;
-        }
-        if (Password.getText().toString().equals("")) {
-            showError(Password, "Can not be empty");
-            return true;
-        }
-        if (NPA.getText().toString().equals("")) {
-            showError(NPA, "Can not be empty");
-            return true;
-        }
-        else
-            return false;
-    }
-
-    private void showError(EditText input, String s){
-        input.setError(s);
-    }
-
-    public void backLogin(View view){
-        startActivity(new Intent(this, LoginActivity.class));
-    }
-*/
 }
+
