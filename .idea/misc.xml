@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1" />
+        <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/drawable/rounded_corner_view.xml" value="0.1" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/activity_create_account.xml" value="0.264" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_createtask.xml" value="0.1203125" />
