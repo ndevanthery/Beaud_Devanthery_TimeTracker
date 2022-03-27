@@ -92,6 +92,15 @@ public class CreateAccountActivity extends AppCompatActivity {
         employee.setFirstName(stFirstname);
         employee.setFunction(stFunction);
         employee.setTelnumber(stTelNumber);
+
+        //Check email format and set email if is valid
+        if(isEmailFormatValid(stEmail)){
+            employee.setEmail(stEmail);
+        }else{
+            showError(Name, "Email format invalid");
+            System.out.println("Email format invalid");
+        }
+
         employee.setEmail(stEmail);
         employee.setAddress(stAddress);
         employee.setImage_Url(stImage_Url);
@@ -120,6 +129,17 @@ public class CreateAccountActivity extends AppCompatActivity {
         backLogin();
 
     }
+
+    //check email format
+    public boolean isEmailFormatValid(String email){
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(email.equals(emailPattern)){
+            System.out.println("Email format valid");
+            return true;
+        }
+        return false;
+    }
+
 
     public boolean CheckIfEmpty() {
         boolean anyisempty = true;

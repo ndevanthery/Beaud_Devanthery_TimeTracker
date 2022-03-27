@@ -42,13 +42,12 @@ public class ProfileFragment extends Fragment {
         binding.lblNumber.setText(myProfile.getTelnumber());
 
 
-
         //when button "logout" is clicked
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //open an alert dialog to confirm choice
-                MyAlertDialog ad = new MyAlertDialog(getContext(),"Logout ? ","are you sure you want to log out","log out");
+                MyAlertDialog ad = new MyAlertDialog(getContext(), "Logout ? ", "are you sure you want to log out", "log out");
                 ad.backToLoginPage();
 
             }
@@ -67,19 +66,19 @@ public class ProfileFragment extends Fragment {
                 //give all the user infos in argument
                 Bundle args = new Bundle();
                 args.putLong("id", myProfile.getId());
-                args.putString("username",myProfile.getUsername());
-                args.putString("password",myProfile.getPassword());
-                args.putString("email",myProfile.getEmail());
-                args.putString("firstname",myProfile.getFirstName());
-                args.putString("name",myProfile.getName());
-                args.putString("number",myProfile.getTelnumber());
-                args.putString("address",myProfile.getAddress());
-                args.putString("function",myProfile.getFunction());
-                args.putString("npa",myProfile.getNPA());
-                args.putBoolean("admin",myProfile.getAdmin());
+                args.putString("username", myProfile.getUsername());
+                args.putString("password", myProfile.getPassword());
+                args.putString("email", myProfile.getEmail());
+                args.putString("firstname", myProfile.getFirstName());
+                args.putString("name", myProfile.getName());
+                args.putString("number", myProfile.getTelnumber());
+                args.putString("address", myProfile.getAddress());
+                args.putString("function", myProfile.getFunction());
+                args.putString("npa", myProfile.getNPA());
+                args.putBoolean("admin", myProfile.getAdmin());
 
                 //change the fragment to Modify Employee
-                transaction.replace(R.id.nav_host_fragment_activity_main, ModifyEmployee.class,args);
+                transaction.replace(R.id.nav_host_fragment_activity_main, ModifyEmployee.class, args);
 
                 transaction.commit();
             }
@@ -90,14 +89,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //open alert dialog to confirm choice<
-                MyAlertDialog ad = new MyAlertDialog(getContext(),"Delete account ? ","are you sure you want to delete this account?","delete");
-                ad.deleteAccount(myProfile,getActivity().getApplication());
-
+                MyAlertDialog ad = new MyAlertDialog(getContext(), "Delete account ? ", "are you sure you want to delete this account?", "delete");
+                ad.deleteAccount(myProfile, getActivity().getApplication());
             }
         });
-
         return root;
-
     }
-
 }
