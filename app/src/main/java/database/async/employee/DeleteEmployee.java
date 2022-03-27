@@ -9,8 +9,8 @@ import util.OnAsyncEventListener;
 
 public class DeleteEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
 
-    private Application application;
-    private OnAsyncEventListener callback;
+    private final Application application;
+    private final OnAsyncEventListener callback;
     private Exception exception;
 
     public DeleteEmployee(Application application, OnAsyncEventListener callback){

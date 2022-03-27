@@ -10,8 +10,8 @@ import util.OnAsyncEventListener;
 
 public class CreateTask extends AsyncTask<TaskEntity, Void, Void> {
 
-    private Application application;
-    private OnAsyncEventListener callback;
+    private final Application application;
+    private final OnAsyncEventListener callback;
     private Exception exception;
 
     public CreateTask(Application application, OnAsyncEventListener callback){

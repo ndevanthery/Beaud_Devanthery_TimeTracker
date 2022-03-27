@@ -9,8 +9,8 @@ import util.OnAsyncEventListener;
 
 public class UpdateEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
 
-    private Application application;
-    private OnAsyncEventListener callback;
+    private final Application application;
+    private final OnAsyncEventListener callback;
     private Exception exception;
 
     public UpdateEmployee(Application application, OnAsyncEventListener callback){

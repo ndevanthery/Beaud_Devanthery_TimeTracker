@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +27,17 @@ import util.OnAsyncEventListener;
 
 public class ModifyEmployee extends Fragment {
 
-    private ModifyEmployeeViewModel mViewModel;
     private ModifyEmployeeFragmentBinding binding;
-
-
-    public static ModifyEmployee newInstance() {
-        return new ModifyEmployee();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        //link with the xml file view
         binding = ModifyEmployeeFragmentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //get the arguments that were sent in input
         Bundle arguments = getArguments();
         long id = (long)arguments.get("id");
         String username = (String)arguments.get("username");
@@ -53,6 +51,8 @@ public class ModifyEmployee extends Fragment {
         String npa = (String)arguments.get("npa");
         boolean admin = (boolean)arguments.get("admin");
 
+
+        //set the texts in all textboxes. the user just modifies the line he wants
         binding.createAccountUsername.setText(username);
         binding.createAccountPassword.setText(password);
         binding.createAccountEmail.setText(email);
@@ -64,11 +64,11 @@ public class ModifyEmployee extends Fragment {
         binding.createAccountNpa.setText(npa);
 
 
+        //when "modify" button is clicked
         binding.modifyProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get modified employee
-
+                //get modifications that were made
                 EmployeeEntity employee = new EmployeeEntity();
                 employee.setId(id);
                 employee.setUsername(binding.createAccountUsername.getText().toString());
@@ -81,21 +81,39 @@ public class ModifyEmployee extends Fragment {
                 employee.setFunction(binding.createAccountFunction.getText().toString());
                 employee.setNPA(binding.createAccountNpa.getText().toString());
                 employee.setAdmin(admin);
+
+                //change the logged employee values to keep them correct
                 LoginActivity.LOGGED_EMPLOYEE = employee;
 
                 //modify in db
                 new UpdateEmployee(getActivity().getApplication(), new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
-                        System.out.println("employee was updated with success");
+                        Log.i("UpdateEmployee","sucessful");
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        System.out.println("employee update failed");
+                        Log.w("UpdateEmployee","failed");
 
                     }
                 }).execute(employee);
+
+                //change the fragment back to the Profile fragment
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.setReorderingAllowed(true);
+                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
+                transaction.commit();
+
+            }
+        });
+
+        //when "back" button is clicked
+        binding.modifyProfileBackbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //change the fragment back to the Profile fragment
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.setReorderingAllowed(true);
                 transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
@@ -103,26 +121,7 @@ public class ModifyEmployee extends Fragment {
             }
         });
 
-        binding.modifyProfileBackbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setReorderingAllowed(true);
-                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
-                transaction.commit();
-            }
-        });
-
-
-
-
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        binding = null;
-    }
 }

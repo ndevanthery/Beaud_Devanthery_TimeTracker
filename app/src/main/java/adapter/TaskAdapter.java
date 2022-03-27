@@ -28,13 +28,13 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
 
     public static final String RESET = "\033[0m";  // Text Reset
 
-    private List<TaskEntity> items;
-    private int layoutResourceId;
-    private Context context;
-    private Context fragmentContext;
-    private LayoutInflater inflater;
-    private Application app;
-    private FragmentManager fragmentManager;
+    private final List<TaskEntity> items;
+    private final int layoutResourceId;
+    private final Context context;
+    private final Context fragmentContext;
+    private final LayoutInflater inflater;
+    private final Application app;
+    private final FragmentManager fragmentManager;
 
     public TaskAdapter(Context context, int layoutResourceId, List<TaskEntity> items, LayoutInflater inflater , Application app, Context fragmentContext, FragmentManager fragmentManager) {
         super(context, layoutResourceId, items);
@@ -91,8 +91,8 @@ public class TaskAdapter extends ArrayAdapter<TaskEntity> {
                 TaskEntity task = holder.task;
 
                 Log.println(Log.WARN,"DETAILS PUSHED",task.getTaskname()+" asked for his details");
-                String startTime = Integer.toString(task.getStartTime()/60) + ":" + Integer.toString(task.getStartTime()%60);
-                String endTime = Integer.toString(task.getEndTime()/60) + ":" + Integer.toString(task.getEndTime()%60);
+                String startTime = task.getStartTime() / 60 + ":" + task.getStartTime() % 60;
+                String endTime = task.getEndTime() / 60 + ":" + task.getEndTime() % 60;
                 String title = task.getTaskname() + " on " + task.getDate();
                 String message = holder.task.getDescription() + "\n\nfrom " + startTime + " to " + endTime;
                 MyAlertDialog ad = new MyAlertDialog(fragmentContext,title,message,"modify");

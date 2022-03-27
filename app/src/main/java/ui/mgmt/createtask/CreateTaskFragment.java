@@ -2,6 +2,7 @@ package ui.mgmt.createtask;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,18 +33,20 @@ public class CreateTaskFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CreateTaskViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(CreateTaskViewModel.class);
 
+
+        //link with the xml file view
         binding = FragmentCreatetaskBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 
-
+        //when button "create" is clicked
         binding.btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //get the task the user wants to create
+                ////////////////////////////////////////////////////////////////////
+                //// get infos written by the user
+                ////////////////////////////////////////////////////////////////////
                 String description = binding.txtDescription.getText().toString();
                 String endTime = binding.txtEndTime.getText().toString();
                 String startTime = binding.txtStartTime.getText().toString();
@@ -55,18 +58,22 @@ public class CreateTaskFragment extends Fragment {
                 ////////////////////////////////////////////////////////////////////
 
 
+                ////////////////////////////////////////////////////////////////////
+                //// set the text boxes free
+                ////////////////////////////////////////////////////////////////////
                 binding.txtTitle.setText("");
                 binding.txtDescription.setText("");
                 binding.txtEndTime.setText("");
                 binding.txtStartTime.setText("");
 
                 ////////////////////////////////////////////////////////////////////
-                //// store in the DB to add
+                //// create a new task object
                 ////////////////////////////////////////////////////////////////////
                 TaskEntity newTask = new TaskEntity();
                 newTask.setDescription(description);
-                String[] startSplit = startTime.split(":");
 
+                //splitting time in min/hour
+                String[] startSplit = startTime.split(":");
                 String[] endSplit = endTime.split(":");
                 int endHour = Integer.parseInt(endSplit[0]);
                 int endMinute = Integer.parseInt(endSplit[1]);
@@ -81,16 +88,20 @@ public class CreateTaskFragment extends Fragment {
                 newTask.setDate(myDate);
                 newTask.setIdEmployee(LoginActivity.LOGGED_EMPLOYEE.getId());
 
+
+                ////////////////////////////////////////////////////////////////////
+                //// add the task in database
+                ////////////////////////////////////////////////////////////////////
                 new CreateTask(getActivity().getApplication(), new OnAsyncEventListener() {
 
                     @Override
                     public void onSuccess() {
-                        System.out.println("La task a bien été ajouté");
+                        Log.i("createTask" , "successful");
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        System.out.println("La task ne s'est pas ajouté");
+                        Log.w( "createTask" , "failed");
                     }
                 }).execute(newTask);
 
@@ -99,12 +110,5 @@ public class CreateTaskFragment extends Fragment {
         });
 
         return root;
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }

@@ -8,8 +8,8 @@ import database.entity.TaskEntity;
 import util.OnAsyncEventListener;
 
 public class DeleteTask extends AsyncTask<TaskEntity, Void, Void> {
-    private Application application;
-    private OnAsyncEventListener callback;
+    private final Application application;
+    private final OnAsyncEventListener callback;
     private Exception exception;
 
     public DeleteTask(Application application, OnAsyncEventListener callback){

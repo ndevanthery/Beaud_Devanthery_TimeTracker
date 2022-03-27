@@ -10,8 +10,8 @@ import baseapp.BaseApp;
 
 public class CreateEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
 
-    private Application application;
-    private OnAsyncEventListener callback;
+    private final Application application;
+    private final OnAsyncEventListener callback;
     private Exception exception;
 
     public CreateEmployee(Application application, OnAsyncEventListener callback){

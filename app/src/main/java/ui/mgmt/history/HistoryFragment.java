@@ -3,6 +3,7 @@ package ui.mgmt.history;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,8 @@ public class HistoryFragment extends Fragment {
     private View root;
     ListView list;
     private TaskAdapter myAdapter;
-    ListView simpleList;
+
+    //list to store the tasks of the users
     List<TaskEntity> myListOfTasks;
 
     private TaskRepository repository;
@@ -49,20 +51,25 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        //get the link with the DB
         repository = ((BaseApp)getActivity().getApplication()).getTaskRepository();
 
-        myListOfTasks = new ArrayList<>();
-
+        //link with the xml file view
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+
+        //get the list view
         list = (ListView)root.findViewById(R.id.myListViewHistory);
+
+
         myListOfTasks = new ArrayList<>();
         myAdapter = new TaskAdapter(getActivity().getBaseContext(),R.layout.history_task_fragment,myListOfTasks,inflater,getActivity().getApplication(),root.getContext(),getParentFragmentManager());
         list.setAdapter(myAdapter);
 
-
+        //request the list of tasks of the employee in the db
         repository.getTasksOfEmployee(getActivity().getApplication(),LoginActivity.LOGGED_EMPLOYEE.getId()).observe(getActivity(), taskEntities -> {
             if (taskEntities != null) {
+                //free the list to avoid double values
                 myListOfTasks.clear();
 
 
@@ -70,36 +77,16 @@ public class HistoryFragment extends Fragment {
                 {
 
                     myListOfTasks.add(taskEntities.get(i));
-                    list.setAdapter(myAdapter);
                 }
+
+                //set an adapter to the list to display the tasks, and make them clickable
+                list.setAdapter(myAdapter);
+
             } else {
-                System.out.println("NO TASKS MAYDAY");
+                Log.i("history","no tasks in database!");
             }
         });
-
-
-
-
         return root;
     }
-
-
-
-
-
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-
-    public void removePayOnClickHandler(View v) {
-        TaskEntity item = (TaskEntity) v.getTag();
-        System.out.println(item.getTaskname() + " " + item.getDate());
-    }
-
 
 }
