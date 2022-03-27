@@ -17,12 +17,14 @@ import androidx.lifecycle.LiveData;
 
 import com.example.beaud_devanthery_timetracker.R;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import baseapp.BaseApp;
 import database.AppDataBase;
 import database.entity.EmployeeEntity;
 import database.repository.EmployeeRepository;
+import java.security.MessageDigest;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -72,19 +74,34 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin= findViewById(R.id.btnLogin);
 
         String stUsername = Username.getText().toString();
-        String stPassword = Password.getText().toString();
+        String encryptedPassword = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(Password.getText().toString().getBytes());
+            byte[] bytes = m.digest();
+            StringBuilder s = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            encryptedPassword = s.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
 
         boolean cancel = false;
         View focusView = null;
 
 
-        //Check if the password is valid
-        if(!TextUtils.isEmpty(stPassword) && !isPasswordValid(stPassword)){
-            Password.setError(getString(R.string.error_invalid_password));
-            Password.setText("");
-            focusView = Password;
-            cancel=true;
-        }
+//        //Check if the password is valid
+//        if(!TextUtils.isEmpty(stPassword) && !isPasswordValid(stPassword)){
+//            Password.setError(getString(R.string.error_invalid_password));
+//            Password.setText("");
+//            focusView = Password;
+//            cancel=true;
+//        }
 
         //Check if the username is valid
         if(TextUtils.isEmpty(stUsername)){
@@ -101,9 +118,10 @@ public class LoginActivity extends AppCompatActivity {
         if(cancel){
             focusView.requestFocus();
         }else{
+            String finalEncryptedPassword = encryptedPassword;
             repository.getEmployee(stUsername, getApplication()).observe(LoginActivity.this, employeeEntity -> {
                 if (employeeEntity != null) {
-                    if (employeeEntity.getPassword().equals(stPassword)) {
+                    if (employeeEntity.getPassword().equals(finalEncryptedPassword)) {
                         SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
                         editor.putString(MainActivity.PREFS_USER, employeeEntity.getUsername());
                         editor.apply();

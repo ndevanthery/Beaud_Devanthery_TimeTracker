@@ -15,6 +15,9 @@ import androidx.core.net.MailTo;
 import com.example.beaud_devanthery_timetracker.R;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import database.AppDataBase;
 import database.async.employee.CreateEmployee;
 import database.dao.EmployeeDao;
@@ -63,7 +66,22 @@ public class CreateAccountActivity extends AppCompatActivity {
         String stAddress = (String) Address.getText().toString();
         String stImage_Url = "nothing for this time";
         String stUsername = (String) Username.getText().toString();
-        String stPassword = (String) Password.getText().toString();
+
+        String encryptedPassword = "";
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(Password.getText().toString().getBytes());
+            byte[] bytes = m.digest();
+            StringBuilder s = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            encryptedPassword = s.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         Boolean stIsAdmin = false;
         String stNPA = (String) NPA.getText().toString();
 
@@ -78,7 +96,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         employee.setAddress(stAddress);
         employee.setImage_Url(stImage_Url);
         employee.setUsername(stUsername);
-        employee.setPassword(stPassword);
+        employee.setPassword(encryptedPassword);
         employee.setAdmin(stIsAdmin);
         employee.setNPA(stNPA);
 
@@ -98,6 +116,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "New account added to database", Toast.LENGTH_SHORT).show();
         System.out.println("EMPLOYEE ADDED TO DATABASE");
+        backLogin();
 
     }
 
@@ -150,7 +169,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         input.setError(s);
     }
 
-    public void backLogin(View view) {
+    public void backLogin() {
         startActivity(new Intent(this, LoginActivity.class));
     }
 }

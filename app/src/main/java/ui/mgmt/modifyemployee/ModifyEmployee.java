@@ -99,11 +99,8 @@ public class ModifyEmployee extends Fragment {
                     }
                 }).execute(employee);
 
-                //change the fragment back to the Profile fragment
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setReorderingAllowed(true);
-                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
-                transaction.commit();
+                switchToProfile();
+
 
             }
         });
@@ -113,15 +110,20 @@ public class ModifyEmployee extends Fragment {
             @Override
             public void onClick(View view) {
 
-                //change the fragment back to the Profile fragment
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.setReorderingAllowed(true);
-                transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
-                transaction.commit();
+                switchToProfile();
             }
         });
 
         return root;
+    }
+
+    private void switchToProfile()
+    {
+        //change the fragment back to the Profile fragment
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.setReorderingAllowed(true);
+        transaction.replace(R.id.nav_host_fragment_activity_main, ProfileFragment.class,null);
+        transaction.commit();
     }
 
 }
