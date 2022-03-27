@@ -2,15 +2,13 @@ package ui.mgmt;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.se.omapi.Session;
-import android.service.carrier.CarrierMessagingService;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.net.MailTo;
 
 import com.example.beaud_devanthery_timetracker.R;
 
@@ -20,30 +18,21 @@ import java.security.NoSuchAlgorithmException;
 
 import database.AppDataBase;
 import database.async.employee.CreateEmployee;
-import database.dao.EmployeeDao;
 import database.entity.EmployeeEntity;
 import util.OnAsyncEventListener;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "CreateAccountActivity";
-    private Toast toast;
 
-    //Déclaration des variables
-    private AppDataBase database;
-    private EmployeeDao employeeDao;
-    private Button buttonRegister;
     private EditText Name, Firstname, Function, Telnumber, Email, Address, Username, Password, NPA;
-    private String Image_url;
-    private Boolean isAdmin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-        database = AppDataBase.getInstance(this.getBaseContext());
-        buttonRegister = findViewById(R.id.modifyProfileButton);
+        //Déclaration des variables
 
         Name = findViewById(R.id.createAccount_lastname);
         Firstname = findViewById(R.id.createAccount_firstname);
@@ -58,6 +47,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
     public void Register(View view) {
+        //get the user infos
         String stName = (String) Name.getText().toString();
         String stFirstname = (String) Firstname.getText().toString();
         String stFunction = (String) Function.getText().toString();
@@ -67,6 +57,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         String stImage_Url = "nothing for this time";
         String stUsername = (String) Username.getText().toString();
 
+
+        //encrypt the password the user has written with MD5
         String encryptedPassword = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -82,10 +74,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+
+
         Boolean stIsAdmin = false;
         String stNPA = (String) NPA.getText().toString();
 
-
+        //create a new Employee entity
         EmployeeEntity employee = new EmployeeEntity();
 
         employee.setName(stName);
@@ -100,22 +94,23 @@ public class CreateAccountActivity extends AppCompatActivity {
         employee.setAdmin(stIsAdmin);
         employee.setNPA(stNPA);
 
+
+        //add the new account to database
         new CreateEmployee(getApplication(), new OnAsyncEventListener() {
 
             @Override
             public void onSuccess() {
-                System.out.println("Le user a bien été ajouté");
+                Log.i("CreateAccount", "Successful");
             }
 
             @Override
             public void onFailure(Exception e) {
-                System.out.println("Le user ne s'est pas ajouté");
+                Log.w("CreateAccount", "failed");
             }
         }).execute(employee);
 
-
+        //little text to say that the account was created
         Toast.makeText(getApplicationContext(), "New account added to database", Toast.LENGTH_SHORT).show();
-        System.out.println("EMPLOYEE ADDED TO DATABASE");
         backLogin();
 
     }
@@ -170,6 +165,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void backLogin() {
+        //go back to login page
         startActivity(new Intent(this, LoginActivity.class));
     }
 }

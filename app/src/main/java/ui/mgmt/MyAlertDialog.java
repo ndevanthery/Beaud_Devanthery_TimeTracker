@@ -23,83 +23,67 @@ import util.OnAsyncEventListener;
 
 public class MyAlertDialog {
 
-    private  int ThemeID;
-    String dialogTitle, dialogMsg, dialogYesBtn, dialogNoBtn = "Cancel";
+    private int ThemeID;
+    String dialogYesBtn, dialogNoBtn = "Cancel";
     Context context;
     AlertDialog.Builder myAlert;
 
 
+    //constructor with all the text that will be displayes
     public MyAlertDialog(Context context, String title, String msg, String yesMsg) {
-        myAlert = new AlertDialog.Builder(context,getThemeID());
+        myAlert = new AlertDialog.Builder(context, getThemeID());
         setDialogTitle(title);
         setDialogMsg(msg);
         setDialogYesBtn(yesMsg);
         this.context = context;
     }
 
-    public void killProgram(){
-        myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
-            dialog.dismiss();
-            System.out.println("------------------------");
-            System.out.println("KILL PROCESS DONE");
-            System.out.println(" by the User");
-            System.out.println("------------------------");
-            //if you want to kill app . from other then your main avtivity.(Launcher)
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
-            //if you want to finish just current activity
-            // LoginActivity.this.finish();
-        });
-        myAlert.setNegativeButton(dialogNoBtn, (dialog, which) -> dialog.dismiss());
-        myAlert.show();
-    }
 
-    public void backToLoginPage(){
+    public void backToLoginPage() {
         myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
             dialog.dismiss();
             SharedPreferences.Editor editor = context.getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
             editor.remove(MainActivity.PREFS_USER);
             editor.apply();
-            LoginActivity.LOGGED_EMPLOYEE=null;
-            Intent intent= new  Intent(context, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            //logged employee is null now because he logged out
+            LoginActivity.LOGGED_EMPLOYEE = null;
+
+            //go to login activity
+            Intent intent = new Intent(context, LoginActivity.class);
             context.startActivity(intent);
         });
         myAlert.setNegativeButton(dialogNoBtn, (dialog, which) -> dialog.dismiss());
         myAlert.show();
     }
 
-    public void aboutUs(){
+    public void aboutUs() {
         myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
-                    dialog.dismiss();
-                });
+            dialog.dismiss();
+        });
         myAlert.show();
     }
 
-    public void details(FragmentManager fragmentManager, TaskEntity taskEntity){
+    public void details(FragmentManager fragmentManager, TaskEntity taskEntity) {
         myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
             dialog.dismiss();
             SharedPreferences.Editor editor = context.getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
             editor.remove(MainActivity.PREFS_USER);
             editor.apply();
             Bundle arguments = new Bundle();
-            arguments.putString("title",taskEntity.getTaskname());
-            arguments.putString("description",taskEntity.getDescription());
-            arguments.putString("date",taskEntity.getDate());
-            arguments.putInt("start",taskEntity.getStartTime());
-            arguments.putInt("end",taskEntity.getEndTime());
-            arguments.putLong( "idTask",taskEntity.getId());
+            arguments.putString("title", taskEntity.getTaskname());
+            arguments.putString("description", taskEntity.getDescription());
+            arguments.putString("date", taskEntity.getDate());
+            arguments.putInt("start", taskEntity.getStartTime());
+            arguments.putInt("end", taskEntity.getEndTime());
+            arguments.putLong("idTask", taskEntity.getId());
 
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             transaction.setReorderingAllowed(true);
 
-// Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, ModifyTask.class,arguments);
-
-// Commit the transaction
+            transaction.replace(R.id.nav_host_fragment_activity_main, ModifyTask.class, arguments);
             transaction.commit();
 
         });
@@ -107,7 +91,7 @@ public class MyAlertDialog {
         myAlert.show();
     }
 
-    public void deleteAccount(EmployeeEntity employee,Application application){
+    public void deleteAccount(EmployeeEntity employee, Application application) {
         myAlert.setPositiveButton(dialogYesBtn, (dialog, which) -> {
             dialog.dismiss();
             SharedPreferences.Editor editor = context.getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
@@ -127,7 +111,7 @@ public class MyAlertDialog {
                 }
             }).execute(employee);
 
-            Intent intent= new  Intent(context, LoginActivity.class);
+            Intent intent = new Intent(context, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             context.startActivity(intent);
@@ -141,18 +125,6 @@ public class MyAlertDialog {
         return ThemeID;
     }
 
-    public void setThemeID(int themeID) {
-        ThemeID = themeID;
-    }
-
-    public String getDialogTitle() {
-        return dialogTitle;
-    }
-
-    public String getDialogMsg() {
-        return dialogMsg;
-    }
-
     public void setDialogTitle(String title) {
         myAlert.setTitle(title);
     }
@@ -161,24 +133,10 @@ public class MyAlertDialog {
         myAlert.setMessage(msg);
     }
 
-    public AlertDialog.Builder getMyAlert() {
-        return myAlert;
-    }
-
-    public String getDialogYesBtn() {
-        return dialogYesBtn;
-    }
 
     public void setDialogYesBtn(String dialogYesBtn) {
         this.dialogYesBtn = dialogYesBtn;
     }
-
-    public String getDialogNoBtn() {
-        return dialogNoBtn;
-    }
-
-    public void setDialogNoBtn(String dialogNoBtn) {
-        this.dialogNoBtn = dialogNoBtn;
-    }
 }
+
 
