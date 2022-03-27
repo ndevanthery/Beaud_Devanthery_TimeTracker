@@ -42,6 +42,7 @@ public class ProfileFragment extends Fragment {
         binding.lblNumber.setText(myProfile.getTelnumber());
 
 
+
         //when button "logout" is clicked
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
