@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-
     tools:context="ui.mgmt.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +19,7 @@
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="390dp"
-            android:background="@drawable/_l_ment_2"
+            android:background="#D325055E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +33,7 @@
                 android:layout_marginTop="220dp"
                 android:text="TimeTracker"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="34sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,19 +53,22 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="266dp"
+                android:layout_width="180dp"
+                android:layout_height="144dp"
+                android:layout_marginStart="215dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/prime_time" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="367dp"
-            android:layout_height="48dp"
+            android:layout_width="339dp"
+            android:layout_height="50dp"
             android:layout_marginStart="21dp"
             android:layout_marginTop="33dp"
             android:layout_marginBottom="46dp"
@@ -81,8 +82,8 @@
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="363dp"
-            android:layout_height="51dp"
+            android:layout_width="334dp"
+            android:layout_height="43dp"
             android:layout_marginStart="26dp"
             android:layout_marginTop="46dp"
             android:drawableStart="@drawable/ic_baseline_lock_24"
@@ -94,8 +95,8 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="361dp"
-            android:layout_height="63dp"
+            android:layout_width="337dp"
+            android:layout_height="49dp"
             android:layout_marginStart="26dp"
             android:layout_marginTop="13dp"
             android:backgroundTint="@color/orange"
@@ -110,22 +111,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="85dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginBottom="125dp"
             android:text="Don't have an account?"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="106dp"
             android:background="@android:color/transparent"
             android:onClick="GoToRegister"
             android:text="CREATE"
             android:textColor="@color/orange"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

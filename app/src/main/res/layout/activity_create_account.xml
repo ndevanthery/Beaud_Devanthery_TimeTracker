@@ -13,35 +13,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/_l_ment_2" />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="123dp"
-            android:layout_height="165dp"
-            android:layout_marginEnd="25dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/prime_time" />
-
         <ScrollView
             android:id="@+id/scrollView3"
-            android:layout_width="348dp"
-            android:layout_height="559dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="340dp"
+            android:layout_height="762dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,34 +28,47 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/createAccount_username"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
+                    android:id="@+id/createAccount_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="25dp"
                     android:layout_marginBottom="10px"
                     android:drawableStart="@drawable/ic_baseline_person_outline_24"
                     android:ems="10"
-                    android:hint="Username"
+                    android:hint="Firstname"
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/createAccount_password"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
+                    android:id="@+id/createAccount_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="25dp"
                     android:layout_marginBottom="10px"
                     android:drawableStart="@drawable/ic_baseline_person_outline_24"
                     android:ems="10"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:hint="Lastname"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/createAccount_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="10px"
+                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
+                    android:ems="10"
+                    android:hint="Phone"
+                    android:inputType="phone"
+                    android:minHeight="48dp" />
 
                 <EditText
                     android:id="@+id/createAccount_email"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="25dp"
                     android:layout_marginBottom="10px"
@@ -86,75 +78,64 @@
                     android:inputType="textEmailAddress" />
 
                 <EditText
-                    android:id="@+id/createAccount_firstname"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="25dp"
-                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
-                    android:ems="10"
-                    android:hint="Firstname"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/createAccount_lastname"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
-                    android:ems="10"
-                    android:hint="Lastname"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/createAccount_function"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="25dp"
-                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
-                    android:ems="10"
-                    android:hint="Function"
-                    android:inputType="text" />
-
-                <EditText
-                    android:id="@+id/createAccount_phone"
-                    android:layout_width="307dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="25dp"
-                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
-                    android:ems="10"
-                    android:hint="Phone"
-                    android:inputType="phone"
-                    android:minHeight="48dp" />
-
-                <EditText
                     android:id="@+id/createAccount_address"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="10px"
                     android:drawableStart="@drawable/ic_baseline_person_outline_24"
                     android:ems="10"
                     android:hint="Address"
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/createAccount_npa"
-                    android:layout_width="307dp"
-                    android:layout_height="48dp"
+                    android:id="@+id/createAccount_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="52dp"
                     android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="10px"
+                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
+                    android:ems="10"
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+
+                <EditText
+                    android:id="@+id/createAccount_npa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="10px"
                     android:drawableStart="@drawable/ic_baseline_person_outline_24"
                     android:ems="10"
                     android:hint="NPA"
                     android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/createAccount_function"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="10px"
+                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
+                    android:ems="10"
+                    android:hint="Function"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/createAccount_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="20px"
+                    android:drawableStart="@drawable/ic_baseline_person_outline_24"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:inputType="text" />
 
                 <Button
                     android:id="@+id/modifyProfileButton"
@@ -165,8 +146,8 @@
 
                 <Button
                     android:id="@+id/modifyProfile_backbtn"
-                    android:layout_width="348dp"
-                    android:layout_height="48dp"
+                    android:layout_width="340dp"
+                    android:layout_height="51dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="148dp"
