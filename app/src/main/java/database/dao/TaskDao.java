@@ -16,34 +16,34 @@ import database.entity.TaskEntity;
 
 @Dao
 public abstract class TaskDao {
-    //Insertion d'une tache
+    //Insert task
     @Insert
     public abstract long insert (TaskEntity task);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertAll(List<TaskEntity> tasks);
 
-    //Update d'une tache
+    //Update task
     @Update
     public abstract void update(TaskEntity task);
 
-    //Suppression d'une tache
+    //Delete task
     @Delete
     public abstract void delete(TaskEntity task);
 
-
-
-    //Select sur une tache
+    //Select task with id
     @Query("SELECT * FROM task WHERE id = :id")
     public abstract LiveData<TaskEntity> getById(Long id);
 
+    //Select all tasks
     @Query("SELECT * FROM task")
     public abstract LiveData<List<TaskEntity>> getAll();
 
-    //delete all
+    //delete all tasks
     @Query("DELETE FROM task")
     public abstract void deleteAll();
 
+    //select task with employee ID
     @Query("SELECT * FROM task WHERE idEmployee= :employeeId")
     public abstract LiveData<List<TaskEntity>> getTasksOfEmployee(long employeeId);
 }

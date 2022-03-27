@@ -49,8 +49,6 @@ public class DatabaseInitializer {
                 isAdmin);
 
         db.employeeDao().insert(employee);
-
-
     }
 
 

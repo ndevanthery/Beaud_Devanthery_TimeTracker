@@ -29,8 +29,8 @@ import java.security.MessageDigest;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //Attributes
     public static EmployeeEntity LOGGED_EMPLOYEE;
-
     private AutoCompleteTextView usernameView;
     private AutoCompleteTextView passwordView;
     private Button buttonLogin;
@@ -40,41 +40,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private EmployeeRepository repository;
 
-    
+    //On create method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         database = AppDataBase.getInstance(this.getBaseContext());
-
-
-
         repository = ((BaseApp)getApplication()).getEmployeeRepository();
-
         Username =  findViewById(R.id.editTextTextEmailAddress);
         Password = findViewById(R.id.editTextTextPassword);
 
 
     }
 
+    //Button back to register page
     public void GoToRegister(View view){
         startActivity(new Intent(this, CreateAccountActivity.class));
     }
 
-
+    //Login method
     public void Login(View view) {
-
 
         Username.setError(null);
         Password.setError(null);
-
-
-
         buttonLogin= findViewById(R.id.btnLogin);
-
         String stUsername = Username.getText().toString();
         String encryptedPassword = "";
+
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
             m.update(Password.getText().toString().getBytes());
@@ -90,18 +83,9 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         boolean cancel = false;
         View focusView = null;
 
-
-//        //Check if the password is valid
-//        if(!TextUtils.isEmpty(stPassword) && !isPasswordValid(stPassword)){
-//            Password.setError(getString(R.string.error_invalid_password));
-//            Password.setText("");
-//            focusView = Password;
-//            cancel=true;
-//        }
 
         //Check if the username is valid
         if(TextUtils.isEmpty(stUsername)){
@@ -114,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             cancel=true;
         }
 
-
+        //login action
         if(cancel){
             focusView.requestFocus();
         }else{
@@ -145,14 +129,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //Check if username is valid
     private boolean isUsernameValid(String username){
         return true;
     }
 
+    //Check if password is valid
     private boolean isPasswordValid(String password){
         return password.length()>=4;
     }
 
+    //Show error on app
     private void showError(EditText input, String s){
         input.setError(s);
     }

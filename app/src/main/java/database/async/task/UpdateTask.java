@@ -29,7 +29,6 @@ public class UpdateTask extends AsyncTask<TaskEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
 

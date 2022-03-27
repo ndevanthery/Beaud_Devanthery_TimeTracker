@@ -29,7 +29,6 @@ public class CreateTask extends AsyncTask<TaskEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
 

@@ -20,11 +20,8 @@ public class TaskEntity {
     private String Date;
     private long idEmployee;
 
-
     public TaskEntity() {
-
     }
-
 
     public TaskEntity(
             String Taskname,

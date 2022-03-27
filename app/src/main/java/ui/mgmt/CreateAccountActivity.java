@@ -24,13 +24,14 @@ import database.dao.EmployeeDao;
 import database.entity.EmployeeEntity;
 import util.OnAsyncEventListener;
 
-public class CreateAccountActivity extends AppCompatActivity {
 
+//Create Account Activity
+public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateAccountActivity";
     private Toast toast;
 
-    //Déclaration des variables
+    //variables declaration
     private AppDataBase database;
     private EmployeeDao employeeDao;
     private Button buttonRegister;
@@ -57,6 +58,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
 
+    //Register method
     public void Register(View view) {
         String stName = (String) Name.getText().toString();
         String stFirstname = (String) Firstname.getText().toString();
@@ -67,6 +69,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String stImage_Url = "nothing for this time";
         String stUsername = (String) Username.getText().toString();
 
+        //Encrypted Password
         String encryptedPassword = "";
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -86,6 +89,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String stNPA = (String) NPA.getText().toString();
 
 
+        //New Employee
         EmployeeEntity employee = new EmployeeEntity();
 
         employee.setName(stName);
@@ -101,7 +105,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             System.out.println("Email format invalid");
         }
 
-        employee.setEmail(stEmail);
+        //Setting the parameters
         employee.setAddress(stAddress);
         employee.setImage_Url(stImage_Url);
         employee.setUsername(stUsername);
@@ -141,6 +145,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
 
+    //Check if editText is Empty
     public boolean CheckIfEmpty() {
         boolean anyisempty = true;
 
@@ -186,10 +191,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
     }
 
+    //Show error on app
     private void showError(EditText input, String s) {
         input.setError(s);
     }
 
+    //Button back to login
     public void backLogin() {
         startActivity(new Intent(this, LoginActivity.class));
     }

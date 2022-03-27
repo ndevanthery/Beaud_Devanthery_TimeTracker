@@ -17,7 +17,6 @@ public class DeleteTask extends AsyncTask<TaskEntity, Void, Void> {
         this.callback = callback;
     }
 
-
     @Override
     protected Void doInBackground(TaskEntity... taskEntities) {
         try{
@@ -27,7 +26,6 @@ public class DeleteTask extends AsyncTask<TaskEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
 

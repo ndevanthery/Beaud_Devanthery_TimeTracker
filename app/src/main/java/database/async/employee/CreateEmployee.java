@@ -19,8 +19,6 @@ public class CreateEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
         this.callback = callback;
     }
 
-
-
     @Override
     protected Void doInBackground(EmployeeEntity... employeeEntities) {
         try{
@@ -30,7 +28,6 @@ public class CreateEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
 

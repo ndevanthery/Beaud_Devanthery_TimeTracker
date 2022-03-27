@@ -27,10 +27,8 @@ public class UpdateEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
-
 
     @Override
     protected void onPostExecute(Void aVoid){

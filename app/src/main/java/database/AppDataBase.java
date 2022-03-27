@@ -19,22 +19,18 @@ import database.dao.TaskDao;
 import database.entity.EmployeeEntity;
 import database.entity.TaskEntity;
 
-
+//DataBase
 @Database(entities = {EmployeeEntity.class, TaskEntity.class}, version = 2)
 public abstract class AppDataBase extends RoomDatabase {
 
 
     private static final String TAG ="AppDatabase";
-
     private static AppDataBase instance;
-
     private static final String DATABASE_NAME ="bank-database";
-
     public abstract EmployeeDao employeeDao();
-
     public abstract TaskDao taskDao();
-
     private final MutableLiveData<Boolean> mIsDatabaseCreated= new MutableLiveData<>();
+
 
     public static AppDataBase getInstance(final Context context) {
         if (instance == null) {
@@ -49,6 +45,7 @@ public abstract class AppDataBase extends RoomDatabase {
         return instance;
     }
 
+    //DataBAse building
     private static AppDataBase buildDatabase(final Context appContext) {
         Log.i(TAG, "Database will be initialized.");
         return Room.databaseBuilder(appContext, AppDataBase.class, DATABASE_NAME).fallbackToDestructiveMigration()
@@ -80,6 +77,7 @@ public abstract class AppDataBase extends RoomDatabase {
         });
     }
 
+    //Update DataBase
     private void updateDatabaseCreated(final Context context){
         if(context.getDatabasePath(DATABASE_NAME).exists()){
             Log.i(TAG, "Database initialized.");
@@ -87,6 +85,7 @@ public abstract class AppDataBase extends RoomDatabase {
         }
     }
 
+    //Setting DataBAse
     private void setDatabaseCreated(){
         mIsDatabaseCreated.postValue(true);
         System.out.println("LA BASE DE DONNEE A BIEN ETE CREE !!!!!!!!!!");
@@ -94,9 +93,6 @@ public abstract class AppDataBase extends RoomDatabase {
 
 
     public LiveData<Boolean> getDatabaseCreated(){
-
         return mIsDatabaseCreated;
     }
-
-
 }

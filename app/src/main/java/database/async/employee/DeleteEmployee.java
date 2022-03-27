@@ -27,10 +27,8 @@ public class DeleteEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
         }catch(Exception e){
             exception = e;
         }
-
         return null;
     }
-
 
     @Override
     protected void onPostExecute(Void aVoid){
@@ -42,5 +40,4 @@ public class DeleteEmployee extends AsyncTask<EmployeeEntity, Void, Void> {
             }
         }
     }
-
 }
