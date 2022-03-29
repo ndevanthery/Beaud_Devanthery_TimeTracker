@@ -48,6 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         database = AppDataBase.getInstance(this.getBaseContext());
+
         repository = ((BaseApp)getApplication()).getEmployeeRepository();
         buttonRegister = findViewById(R.id.modifyProfileButton);
 
@@ -155,7 +156,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     //Check if editText is Empty
     public boolean CheckConditions() {
-        boolean anyisempty = true;
 
 
         if (Firstname.getText().toString().equals("")) {
@@ -210,7 +210,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         }
         return true;
-
     }
 
     public boolean usernameTaken(String username)
@@ -223,17 +222,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                     else
                     {
                         isIn.set(true);
-
                     }
-
-
-
         }
         );
-
-
         return isIn.get();
-
     }
 
     //Show error on app
