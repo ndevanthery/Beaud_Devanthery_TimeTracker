@@ -2,26 +2,29 @@ package ui.mgmt;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.se.omapi.Session;
-import android.service.carrier.CarrierMessagingService;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.net.MailTo;
 
 import com.example.beaud_devanthery_timetracker.R;
 
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
 
+import baseapp.BaseApp;
 import database.AppDataBase;
 import database.async.employee.CreateEmployee;
 import database.dao.EmployeeDao;
 import database.entity.EmployeeEntity;
+import database.repository.EmployeeRepository;
 import util.OnAsyncEventListener;
 
 
@@ -34,6 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     //variables declaration
     private AppDataBase database;
     private EmployeeDao employeeDao;
+    private EmployeeRepository repository;
     private Button buttonRegister;
     private EditText Name, Firstname, Function, Telnumber, Email, Address, Username, Password, NPA;
     private String Image_url;
@@ -44,6 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         database = AppDataBase.getInstance(this.getBaseContext());
+        repository = ((BaseApp)getApplication()).getEmployeeRepository();
         buttonRegister = findViewById(R.id.modifyProfileButton);
 
         Name = findViewById(R.id.createAccount_lastname);
@@ -96,48 +101,51 @@ public class CreateAccountActivity extends AppCompatActivity {
         employee.setFirstName(stFirstname);
         employee.setFunction(stFunction);
         employee.setTelnumber(stTelNumber);
-
-        //Check email format and set email if is valid
-        if(isEmailFormatValid(stEmail)){
-            employee.setEmail(stEmail);
-        }else{
-            showError(Name, "Email format invalid");
-            System.out.println("Email format invalid");
-        }
-
-        //Setting the parameters
         employee.setAddress(stAddress);
         employee.setImage_Url(stImage_Url);
         employee.setUsername(stUsername);
         employee.setPassword(encryptedPassword);
         employee.setAdmin(stIsAdmin);
         employee.setNPA(stNPA);
+        employee.setEmail(stEmail);
+        //Check email format and set email if is valid
+        if(CheckConditions()){
 
-        new CreateEmployee(getApplication(), new OnAsyncEventListener() {
+            new CreateEmployee(getApplication(), new OnAsyncEventListener() {
 
-            @Override
-            public void onSuccess() {
-                System.out.println("Le user a bien été ajouté");
-            }
+                @Override
+                public void onSuccess() {
+                    System.out.println("Le user a bien été ajouté");
+                }
 
-            @Override
-            public void onFailure(Exception e) {
-                System.out.println("Le user ne s'est pas ajouté");
-                backLogin();
-            }
-        }).execute(employee);
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("Le user ne s'est pas ajouté");
+                    backLogin();
+                }
+            }).execute(employee);
+            Toast.makeText(getApplicationContext(), "New account added to database", Toast.LENGTH_SHORT).show();
+            backLogin();
 
 
-        Toast.makeText(getApplicationContext(), "New account added to database", Toast.LENGTH_SHORT).show();
-        System.out.println("EMPLOYEE ADDED TO DATABASE");
-        backLogin();
+        }
+
+
+
+
+
+
+
 
     }
 
     //check email format
     public boolean isEmailFormatValid(String email){
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if(email.equals(emailPattern)){
+        String emailPattern = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(emailPattern);
+
+
+        if(pattern.matcher(email).matches()){
             System.out.println("Email format valid");
             return true;
         }
@@ -146,49 +154,86 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
     //Check if editText is Empty
-    public boolean CheckIfEmpty() {
+    public boolean CheckConditions() {
         boolean anyisempty = true;
 
-        if (Name.getText().toString().equals("")) {
-            showError(Name, "Can not be empty");
-            return true;
-        }
+
         if (Firstname.getText().toString().equals("")) {
             showError(Firstname, "Can not be empty");
-            return true;
+            return false;
         }
-        if (Function.getText().toString().equals("")) {
-            showError(Function, "Can not be empty");
-            return true;
+        if (Name.getText().toString().equals("")) {
+            showError(Name, "Can not be empty");
+            return false;
         }
         if (Telnumber.getText().toString().equals("")) {
             showError(Telnumber, "Can not be empty");
-            return true;
+            return false;
         }
-
         if (Email.getText().toString().equals("")) {
             showError(Email, "Can not be empty");
-            return true;
+            return false;
         }
-
+        else{
+            if(!isEmailFormatValid(Email.getText().toString()))
+            {
+                showError(Email,"enter a valid email");
+                return false;
+            }
+        }
         if (Address.getText().toString().equals("")) {
             showError(Address, "Can not be empty");
-            return true;
-        }
-
-        if (Username.getText().toString().equals("")) {
-            showError(Username, "Can not be empty");
-            return true;
+            return false;
         }
         if (Password.getText().toString().equals("")) {
             showError(Password, "Can not be empty");
-            return true;
+            return false;
         }
         if (NPA.getText().toString().equals("")) {
             showError(NPA, "Can not be empty");
-            return true;
-        } else
             return false;
+        }
+        if (Function.getText().toString().equals("")) {
+            showError(Function, "Can not be empty");
+            return false;
+        }
+        if (Username.getText().toString().equals("")) {
+            showError(Username, "Can not be empty");
+            return false;
+        }
+        else
+        {
+            if(usernameTaken(Username.getText().toString()))
+            {
+                showError(Username, "this username is already taken");
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public boolean usernameTaken(String username)
+    {
+        AtomicBoolean isIn = new AtomicBoolean(false);
+        repository.getEmployee(username, getApplication()).observe(CreateAccountActivity.this, employeeEntity -> {
+                    if (employeeEntity != null) {
+                        isIn.set(false);
+                    }
+                    else
+                    {
+                        isIn.set(true);
+
+                    }
+
+
+
+        }
+        );
+
+
+        return isIn.get();
+
     }
 
     //Show error on app
