@@ -8,7 +8,6 @@
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_createtask.xml" value="0.1203125" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_history.xml" value="0.25416666666666665" />
-        <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_settings.xml" value="0.2196307094266278" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_settings2.xml" value="0.25416666666666665" />
         <entry key="..\:/HES/android/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/modify_task_fragment.xml" value="0.536" />
@@ -20,6 +19,7 @@
         <entry key="..\:/Users/simon/AndroidStudioProjects/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/simon/AndroidStudioProjects/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/simon/AndroidStudioProjects/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/simon/AndroidStudioProjects/Beaud_Devanthery_TimeTracker/app/src/main/res/layout/modify_employee_fragment.xml" value="0.16394927536231885" />
         <entry key="..\:/Users/simon/AndroidStudioProjects/Beaud_Devanthery_TimeTracker/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

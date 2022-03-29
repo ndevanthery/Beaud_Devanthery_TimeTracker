@@ -41,7 +41,7 @@ public class ModifyEmployee extends Fragment {
         Bundle arguments = getArguments();
         long id = (long)arguments.get("id");
         String username = (String)arguments.get("username");
-        String password = (String)arguments.get("password");
+        //String password = (String)arguments.get("password");
         String email = (String)arguments.get("email");
         String firstname = (String)arguments.get("firstname");
         String name = (String)arguments.get("name");
@@ -54,7 +54,7 @@ public class ModifyEmployee extends Fragment {
 
         //set the texts in all textboxes. the user just modifies the line he wants
         binding.createAccountUsername.setText(username);
-        binding.createAccountPassword.setText(password);
+        //binding.createAccountPassword.setText(password);
         binding.createAccountEmail.setText(email);
         binding.createAccountFirstname.setText(firstname);
         binding.createAccountLastname.setText(name);
@@ -72,7 +72,7 @@ public class ModifyEmployee extends Fragment {
                 EmployeeEntity employee = new EmployeeEntity();
                 employee.setId(id);
                 employee.setUsername(binding.createAccountUsername.getText().toString());
-                employee.setPassword(binding.createAccountPassword.getText().toString());
+                //employee.setPassword(binding.createAccountPassword.getText().toString());
                 employee.setEmail(binding.createAccountEmail.getText().toString());
                 employee.setFirstName(binding.createAccountFirstname.getText().toString());
                 employee.setName(binding.createAccountLastname.getText().toString());

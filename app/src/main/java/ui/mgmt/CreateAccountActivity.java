@@ -130,14 +130,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         }
-
-
-
-
-
-
-
-
     }
 
     //check email format
